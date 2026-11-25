@@ -35,6 +35,8 @@
       padding: 28px 0 54px;
     }
 
+    /* NAVIGATION */
+
     .topline {
       display: flex;
       align-items: center;
@@ -75,15 +77,15 @@
       color: var(--red);
     }
 
-    /* BANNER - FULL IMAGE VISIBLE */
+    /* BANNER - 1800 x 710 RATIO */
 
     .hero {
       width: 100%;
-      height: auto;
-      min-height: 0;
-      background: #fff;
+      aspect-ratio: 1800 / 710;
+      background: #ededed;
       overflow: hidden;
       margin-bottom: 34px;
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -92,11 +94,12 @@
     .hero img {
       display: block;
       width: 100%;
-      height: auto;
-      max-height: 600px;
+      height: 100%;
       object-fit: contain;
       object-position: center;
     }
+
+    /* REPLAY HEADER */
 
     .eyebrow {
       color: var(--red);
@@ -225,19 +228,19 @@
     /* MOBILE */
 
     @media(max-width:760px) {
+
       .days {
         grid-template-columns: 1fr;
       }
 
       .hero {
-        height: auto;
-        min-height: 0;
+        aspect-ratio: 1800 / 710;
+        width: 100%;
       }
 
       .hero img {
         width: 100%;
-        height: auto;
-        max-height: none;
+        height: 100%;
         object-fit: contain;
       }
 
@@ -251,6 +254,7 @@
     }
 
     @media(max-width:420px) {
+
       .topline {
         align-items: flex-start;
         gap: 14px;
@@ -266,6 +270,7 @@
         font-size: 10px;
       }
     }
+
   </style>
 </head>
 
@@ -273,7 +278,10 @@
 
   <main class="page">
 
+    <!-- NAVIGATION -->
+
     <nav class="topline">
+
       <a class="brand" href="index.html">
         SEVENISH<span>.</span>
       </a>
@@ -282,14 +290,20 @@
         <a class="back" href="index.html">← Back Home</a>
         <a class="back" href="concerts.html">Tour Archive</a>
       </div>
+
     </nav>
 
     <!-- BANNER IMAGE -->
+
     <header class="hero">
-      <img src="tokyo.jpg" alt="Tokyo concert banner">
+      <img
+        src="tokyo.jpg"
+        alt="Tokyo concert banner"
+      >
     </header>
 
     <!-- REPLAY CONTENT -->
+
     <section>
 
       <p class="eyebrow">
@@ -305,7 +319,9 @@
       <div class="days">
 
         <!-- DAY 1 -->
+
         <article class="day">
+
           <span class="day-no">01 / CONCERT REPLAY</span>
 
           <h2>DAY 1</h2>
@@ -324,10 +340,13 @@
           >
             Watch replay ↗
           </a>
+
         </article>
 
         <!-- DAY 2 -->
+
         <article class="day">
+
           <span class="day-no">02 / CONCERT REPLAY</span>
 
           <h2>DAY 2</h2>
@@ -346,15 +365,21 @@
           >
             Watch replay ↗
           </a>
+
         </article>
 
       </div>
+
     </section>
 
     <!-- FOOTER -->
+
     <footer class="footer">
+
       <span>SEVENISH. · SEVEN MEMBERS. ONE UNIVERSE.</span>
+
       <span>Made with love for ARMY</span>
+
     </footer>
 
   </main>
