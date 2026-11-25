@@ -3,82 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090909">
+  <meta name="theme-color" content="#ffffff">
   <title>Tokyo Replay Archive | SEVENISH.</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --red: #f12d40;
-      --ink: #101010;
-      --muted: #858585;
-      --paper: #f1f1f1;
-    }
-
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      margin: 0;
       background: #fff;
-      color: var(--ink);
-      font-family: Inter, Arial, sans-serif;
+      color: #111;
+      font-family: 'Inter', sans-serif;
     }
 
     .page {
-      width: min(1180px, calc(100% - 44px));
+      width: calc(100% - 40px);
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 28px 0 54px;
+      padding: 35px 0 60px;
     }
 
-    /* NAVIGATION */
-
-    .topline {
+    header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #e5e5e5;
-      padding-bottom: 17px;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 34px;
+      letter-spacing: 1px;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #f12d40;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: #111;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      transition: color .2s ease;
+    }
+
+    nav a:hover {
+      color: #f12d40;
+    }
+
+    .eyebrow {
+      color: #f12d40;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 8vw, 85px);
+      line-height: .95;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: #777;
+      font-size: 13px;
+      line-height: 1.7;
       margin-bottom: 28px;
     }
 
-    .brand {
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: 28px;
-      letter-spacing: 1.2px;
-      text-decoration: none;
-      color: var(--ink);
-    }
-
-    .brand span {
-      color: var(--red);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-
-    .back {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.3px;
-      color: #555;
-      text-decoration: none;
-      text-transform: uppercase;
-    }
-
-    .back:hover {
-      color: var(--red);
-    }
-
-    /* BANNER - 1800 x 710 */
-
+    /* BANNER */
     .hero {
       width: 100%;
       aspect-ratio: 1800 / 710;
@@ -93,141 +105,119 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 45%;
+      object-position: center 55%;
     }
 
-    /* REPLAY HEADER */
-
-    .eyebrow {
-      color: var(--red);
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
       font-size: 11px;
-      font-weight: 900;
+      font-weight: 800;
       letter-spacing: 2px;
-      text-transform: uppercase;
-      margin: 0 0 10px;
     }
 
-    .heading {
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: 42px;
-      line-height: 1;
-      margin: 0 0 9px;
+    .section-label::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: #e5e5e5;
     }
 
-    .sub {
-      font-size: 13px;
-      line-height: 1.7;
-      color: #777;
-      margin: 0 0 25px;
-    }
-
-    /* REPLAY CARDS */
-
-    .days {
+    .concert-list {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .concert-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 23px 22px;
+      border: 1px solid #e8e8e8;
+      text-decoration: none;
+      color: #111;
+      transition: .2s ease;
+    }
+
+    .concert-card:hover {
+      border-color: #f12d40;
+      transform: translateY(-3px);
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .day {
-      background: var(--paper);
-      padding: 24px 22px 22px;
-      min-height: 190px;
-      display: flex;
-      flex-direction: column;
+      color: #f12d40;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
     }
 
-    .day-no {
-      font-size: 11px;
-      color: var(--red);
-      font-weight: 900;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
+    .card-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 27px;
+      letter-spacing: .5px;
     }
 
-    .day h2 {
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: 32px;
-      margin: 8px 0 6px;
-      line-height: 1;
-    }
-
-    /* CITY + DATE */
-
-    .day .replay-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 0 0 20px;
-      font-size: 12px;
-      font-weight: 400;
-      color: #777;
-    }
-
-    .day .replay-city,
-    .day .replay-date {
-      color: #777;
-      font: inherit;
-    }
-
-    /* SMALL GRAY DOT */
-
-    .day .meta-dot {
-      width: 2px;
-      height: 2px;
-      min-width: 2px;
-      min-height: 2px;
-      border-radius: 50%;
-      background: #777;
-      flex: 0 0 2px;
-    }
-
-    /* WATCH BUTTON */
-
-    .watch {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 54px;
-      background: var(--red);
-      color: #fff;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .7px;
-      text-transform: uppercase;
-      transition: background .18s, transform .18s;
-    }
-
-    .watch:hover {
-      background: #c91e30;
-      transform: translateY(-2px);
-    }
-
-    /* FOOTER */
-
-    .footer {
-      margin-top: 40px;
-      padding-top: 18px;
-      border-top: 1px solid #e5e5e5;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+    .card-subtitle {
       color: #888;
       font-size: 10px;
-      font-weight: 700;
       letter-spacing: 1px;
-      text-transform: uppercase;
     }
 
-    /* MOBILE */
+    .arrow {
+      color: #f12d40;
+      font-size: 23px;
+    }
 
-    @media(max-width:760px) {
+    footer {
+      border-top: 1px solid #e8e8e8;
+      margin-top: 60px;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      color: #999;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
 
-      .days {
-        grid-template-columns: 1fr;
+    footer strong {
+      color: #111;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: calc(100% - 30px);
+        padding-top: 25px;
+      }
+
+      header {
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .logo {
+        font-size: 29px;
+      }
+
+      nav {
+        gap: 13px;
+        padding-top: 10px;
+      }
+
+      nav a {
+        font-size: 9px;
       }
 
       .hero {
@@ -235,148 +225,70 @@
       }
 
       .hero img {
-        object-position: center 45%;
+        object-position: center 55%;
       }
 
-      .page {
-        width: min(100% - 28px, 560px);
+      .concert-list {
+        grid-template-columns: 1fr;
       }
 
-      .day {
-        min-height: 170px;
-      }
-    }
-
-    @media(max-width:420px) {
-
-      .topline {
-        align-items: flex-start;
-        gap: 14px;
-      }
-
-      .nav-links {
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 9px;
-      }
-
-      .back {
-        font-size: 10px;
+      footer {
+        gap: 15px;
+        flex-wrap: wrap;
       }
     }
-
   </style>
 </head>
 
 <body>
-
   <main class="page">
 
-    <!-- NAVIGATION -->
+    <header>
+      <a href="index.html" class="logo">SEVENISH<span>.</span></a>
 
-    <nav class="topline">
-
-      <a class="brand" href="index.html">
-        SEVENISH<span>.</span>
-      </a>
-
-      <div class="nav-links">
-        <a class="back" href="index.html">← Back Home</a>
-        <a class="back" href="concerts.html">Tour Archive</a>
-      </div>
-
-    </nav>
-
-    <!-- BANNER IMAGE -->
-
-    <header class="hero">
-      <img
-        src="tokyo.jpg"
-        alt="Tokyo concert banner"
-      >
+      <nav>
+        <a href="index.html">HOME</a>
+        <a href="concerts.html">CONCERTS</a>
+      </nav>
     </header>
 
-    <!-- REPLAY CONTENT -->
+    <p class="eyebrow">ARIRANG WORLD TOUR</p>
+    <h1>TOKYO REPLAY.</h1>
+    <p class="intro">
+      Relive the moments. Browse the concert replay archive.
+    </p>
 
-    <section>
+    <div class="hero">
+      <img src="tokyo.jpg" alt="BTS Tokyo concert banner">
+    </div>
 
-      <p class="eyebrow">
-        ASIA / ARIRANG TOUR
-      </p>
+    <div class="section-label">REPLAY ARCHIVE</div>
 
-      <h2 class="heading">TOKYO</h2>
+    <div class="concert-list">
+      <a class="concert-card" href="https://t.me/bangtandept/15" target="_blank" rel="noopener noreferrer">
+        <div class="card-info">
+          <span class="day">TOKYO · DAY 01</span>
+          <span class="card-title">FULL CONCERT</span>
+          <span class="card-subtitle">WATCH THE REPLAY</span>
+        </div>
+        <span class="arrow">↗</span>
+      </a>
 
-      <p class="sub">
-        Choose a concert day below to watch the replay.
-      </p>
+      <a class="concert-card" href="https://t.me/bangtandept/8" target="_blank" rel="noopener noreferrer">
+        <div class="card-info">
+          <span class="day">TOKYO · DAY 02</span>
+          <span class="card-title">FULL CONCERT</span>
+          <span class="card-subtitle">WATCH THE REPLAY</span>
+        </div>
+        <span class="arrow">↗</span>
+      </a>
+    </div>
 
-      <div class="days">
-
-        <!-- DAY 1 -->
-
-        <article class="day">
-
-          <span class="day-no">01 / CONCERT REPLAY</span>
-
-          <h2>DAY 1</h2>
-
-          <p class="replay-meta">
-            <span class="replay-city">TOKYO</span>
-            <span class="meta-dot"></span>
-            <span class="replay-date">APR 17</span>
-          </p>
-
-          <a
-            class="watch"
-            href="https://t.me/bangtandept/15"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Watch replay ↗
-          </a>
-
-        </article>
-
-        <!-- DAY 2 -->
-
-        <article class="day">
-
-          <span class="day-no">02 / CONCERT REPLAY</span>
-
-          <h2>DAY 2</h2>
-
-          <p class="replay-meta">
-            <span class="replay-city">TOKYO</span>
-            <span class="meta-dot"></span>
-            <span class="replay-date">APR 18</span>
-          </p>
-
-          <a
-            class="watch"
-            href="https://t.me/bangtandept/8"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Watch replay ↗
-          </a>
-
-        </article>
-
-      </div>
-
-    </section>
-
-    <!-- FOOTER -->
-
-    <footer class="footer">
-
-      <span>SEVENISH. · SEVEN MEMBERS. ONE UNIVERSE.</span>
-
-      <span>Made with love for ARMY</span>
-
+    <footer>
+      <strong>SEVENISH.</strong>
+      <span>MADE FOR ARMY · BTS ARIRANG TOUR ARCHIVE</span>
     </footer>
 
   </main>
-
 </body>
 </html>
