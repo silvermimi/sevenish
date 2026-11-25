@@ -31,6 +31,7 @@ header {
   border-bottom: 1px solid #eee; position: sticky;
   top: 0; z-index: 20; background: white;
 }
+
 .logo { font-family: 'Barlow Condensed'; font-size: 34px; font-weight: 900; }
 .logo span, footer h2 span { color: var(--red); }
 nav { display: flex; gap: 26px; }
@@ -48,6 +49,7 @@ nav a:hover { color: var(--red); }
   display: flex; align-items: flex-end;
   padding: 70px 25px 85px;
 }
+
 .hero-inner { max-width: 1180px; width: 100%; margin: auto; }
 .eyebrow { color: #ff5363; font-size: 11px; font-weight: 800; letter-spacing: 3px; margin-bottom: 15px; }
 .hero h1 { font-family: 'Barlow Condensed'; font-size: clamp(75px, 12vw, 145px); line-height: .78; font-weight: 900; letter-spacing: -2px; }
@@ -78,6 +80,7 @@ section.content { padding: 65px 0; }
   width: 100%; padding: 13px 15px; border: 1px solid #ddd;
   background: white; font-size: 12px; outline: none;
 }
+
 .schedule-tools input:focus, .song-tools input:focus,
 .replay-tools input:focus, .replay-tools select:focus {
   border-color: var(--red); box-shadow: 0 0 0 3px rgba(229,35,54,.12);
@@ -112,17 +115,55 @@ section.content { padding: 65px 0; }
 .replay-tools input, .replay-tools select { padding: 12px; border: 1px solid #ddd; font-size: 11px; min-width: 0; }
 .replay-tools input { flex: 1; }
 .replay-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+
 .replay-card { background: var(--gray); overflow: hidden; }
+
 .replay-thumb {
   height: 165px; position: relative; display: flex;
   flex-direction: column; align-items: center; justify-content: center;
   gap: 12px; color: white;
   background: radial-gradient(circle at 75% 25%, #4b1820 0, #171717 38%, #080808 78%);
 }
+
+/* IMAGE THUMBNAILS */
+.replay-thumb.has-image {
+  background: #080808;
+  overflow: hidden;
+}
+
+.replay-thumb .replay-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  z-index: 0;
+}
+
+.replay-thumb.has-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.30), transparent 45%);
+  z-index: 1;
+}
+
+.replay-thumb.has-image .replay-wordmark {
+  display: none;
+}
+
 .replay-wordmark { position: relative; z-index: 1; color: white; font-family: 'Barlow Condensed'; font-size: 38px; font-weight: 900; letter-spacing: 2px; }
 .replay-wordmark span { color: var(--red); }
 .replay-pending { position: relative; z-index: 1; color: #ff9aa4; font-size: 9px; font-weight: 800; letter-spacing: 2px; }
-.play-icon { position: relative; z-index: 1; width: 45px; height: 45px; background: var(--red); color: white; border-radius: 50%; display: grid; place-items: center; font-size: 17px; }
+
+.play-icon {
+  position: relative; z-index: 2; width: 45px; height: 45px;
+  background: var(--red); color: white; border-radius: 50%;
+  display: grid; place-items: center; font-size: 17px;
+  box-shadow: 0 3px 15px rgba(0,0,0,.4);
+}
+
 .replay-info { padding: 17px; }
 .replay-info small { color: var(--red); font-size: 9px; font-weight: 800; letter-spacing: 1px; }
 .replay-info h3 { font-family: 'Barlow Condensed'; font-size: 25px; margin: 7px 0; text-transform: uppercase; }
@@ -142,6 +183,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
 @media(max-width:900px) {
   .schedule-list { grid-template-columns: 1fr; }
 }
+
 @media(max-width:750px) {
   header { padding: 0 5%; }
   .menu-btn { display: block; }
@@ -158,12 +200,14 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
   .next-show h2 { font-size: 36px; }
   .song-table th, .song-table td { padding: 10px 7px; font-size: 9px; }
 }
+
 @media(max-width:460px) {
   .replay-grid { grid-template-columns: 1fr; }
   .next-show { grid-template-columns: 1fr auto; padding: 20px; }
   .next-date { font-size: 43px; }
   .replay-thumb { height: 190px; }
 }
+
 @media(max-width:600px) {
   .schedule-tools input, .song-tools input { font-size: 16px; }
   .replay-tools { flex-direction: column; }
@@ -171,6 +215,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
   .section-title { align-items: flex-start; flex-direction: column; gap: 10px; }
   .section-title h2 { font-size: 30px; }
 }
+
 @media(prefers-reduced-motion:reduce) {
   html { scroll-behavior: auto; }
   *,*::before,*::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -182,8 +227,10 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
 
 <header>
   <a class="logo" href="index.html">SEVENISH<span>.</span></a>
+
   <button class="menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false"
     onclick="const nav=document.querySelector('header nav');const open=nav.classList.toggle('show');this.setAttribute('aria-expanded',open);">☰</button>
+
   <nav>
     <a href="index.html">Home</a>
     <a href="index.html#about">About</a>
@@ -219,14 +266,17 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
 
   <section class="content" id="schedule">
     <div class="section-title"><h2>WORLD TOUR SCHEDULE</h2><span>2026 / 2027</span></div>
+
     <div class="schedule-tools">
       <input type="search" id="scheduleSearch" placeholder="Search city, country, venue or date..." aria-label="Search tour schedule">
     </div>
+
     <div class="schedule-filters">
       <button class="filter-btn active" onclick="filterSchedule('all',this)">All Dates</button>
       <button class="filter-btn" onclick="filterSchedule('completed',this)">Completed</button>
       <button class="filter-btn" onclick="filterSchedule('upcoming',this)">Upcoming</button>
     </div>
+
     <div class="schedule-list" id="scheduleList"></div>
   </section>
 
@@ -236,9 +286,11 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
   <div class="container">
     <div class="section-title"><h2>SURPRISE SONG TRACKER</h2><span id="songUpdated">UPDATED</span></div>
     <p class="song-intro">The songs we didn't expect but will never forget. Browse the surprise-song records from each ARIRANG World Tour stop.</p>
+
     <div class="song-tools">
       <input type="search" id="songSearch" placeholder="Search a song, city or date..." aria-label="Search surprise songs">
     </div>
+
     <div style="overflow-x:auto;">
       <table class="song-table">
         <thead>
@@ -247,6 +299,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
         <tbody id="songList"></tbody>
       </table>
     </div>
+
     <p class="song-note">*Song records should be checked against reliable concert setlists before publishing.</p>
   </div>
 </section>
@@ -255,8 +308,10 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
   <div class="container">
     <div class="section-title"><h2>TOUR REPLAY ARCHIVE</h2><span>WATCH THE MEMORIES ↗</span></div>
     <p class="song-intro">Missed a night? Revisit the tour through official replays, authorized highlights and available concert videos.</p>
+
     <div class="replay-tools">
       <input type="search" id="replaySearch" placeholder="Search city or concert date..." aria-label="Search replay archive">
+
       <select id="replayFilter" aria-label="Filter by region">
         <option value="all">All Locations</option>
         <option value="Asia">Asia</option>
@@ -266,6 +321,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
         <option value="Oceania">Oceania</option>
       </select>
     </div>
+
     <div class="replay-grid" id="replayGrid"></div>
   </div>
 </section>
@@ -286,7 +342,6 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
 
 const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 
-// "2026-04-09" -> Date (local time, walang timezone shift)
 function parseISO(iso) {
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(y, m - 1, d);
@@ -299,21 +354,22 @@ function formatDate(iso) {
 
 function escapeHTML(text) {
   return String(text).replace(/[&<>"']/g, ch => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   }[ch]));
 }
 
-// Today (midnight). Ang show ay "completed" kapag lumipas na ang petsa niya.
 const TODAY = new Date();
 TODAY.setHours(0, 0, 0, 0);
 
 // ===================================
 // 1. WORLD TOUR SCHEDULE DATA
-//    Isang entry kada city/stop. Dates ang nag-de-decide ng completed/upcoming.
 // ===================================
 
 const tour = [
-  // --- 2026 ---
   {city:"Goyang, South Korea", venue:"Goyang Stadium", region:"Asia", dates:["2026-04-09","2026-04-11","2026-04-12"]},
   {city:"Tokyo, Japan", venue:"Tokyo Dome", region:"Asia", dates:["2026-04-17","2026-04-18"]},
   {city:"Tampa, USA", venue:"Raymond James Stadium", region:"North America", dates:["2026-04-25","2026-04-26","2026-04-28"]},
@@ -344,15 +400,12 @@ const tour = [
   {city:"Kuala Lumpur, Malaysia", venue:"TM Stadium Nasional", region:"Asia", dates:["2026-12-12","2026-12-13"]},
   {city:"Singapore", venue:"National Stadium", region:"Asia", dates:["2026-12-17","2026-12-19","2026-12-20","2026-12-22"]},
   {city:"Jakarta, Indonesia", venue:"Gelora Bung Karno Main Stadium", region:"Asia", dates:["2026-12-26","2026-12-27","2026-12-29"]},
-
-  // --- 2027 ---
   {city:"Melbourne, Australia", venue:"Marvel Stadium", region:"Oceania", dates:["2027-02-10","2027-02-12","2027-02-13"]},
   {city:"Sydney, Australia", venue:"Accor Stadium", region:"Oceania", dates:["2027-02-20","2027-02-21"]},
   {city:"Hong Kong", venue:"Kai Tak Stadium", region:"Asia", dates:["2027-03-04","2027-03-06","2027-03-07"]},
   {city:"Bulacan, Philippines", venue:"Philippine Sports Stadium", region:"Asia", dates:["2027-03-13","2027-03-14","2027-03-16"]}
 ];
 
-// Gawing flat list ng bawat show + auto status base sa petsa
 const shows = tour
   .flatMap(stop => stop.dates.map(iso => ({
     iso,
@@ -366,107 +419,78 @@ const shows = tour
 
 // ===================================
 // 2. SURPRISE SONGS DATA
-//    Naka-key by date. Ang city ay kinukuha automatically sa schedule,
-//    kaya hindi na magkakamali ang city/date match.
 // ===================================
 
 const SONGS_UPDATED = "NOV 22, 2026";
 
 const surpriseSongs = {
-  // Kaohsiung
   "2026-11-22": ["Embarrassed", "Boy With Luv"],
   "2026-11-21": ["Sea", "Boy In Luv"],
   "2026-11-19": ["DNA", "Answer: Love Myself"],
-  // São Paulo
   "2026-10-31": ["Ddaeng", "BTS Cypher Pt.3: Killer"],
   "2026-10-30": ["Airplane Pt.2", "I Need U"],
   "2026-10-28": ["Black Swan", "Silver Spoon"],
-  // Buenos Aires
   "2026-10-24": ["Lost", "BTS Cypher 4"],
   "2026-10-23": ["Attack on Bangtan", "Epilogue: Young Forever"],
   "2026-10-21": ["Hold Me Tight", "Dionysus"],
-  // Santiago
   "2026-10-17": ["Jump", "Spine Breaker"],
   "2026-10-16": ["Telepathy", "Heartbeat"],
   "2026-10-14": ["Run", "Save Me"],
-  // Lima
   "2026-10-10": ["Outro: House of Cards", "UGH!"],
   "2026-10-09": ["Paldogangsan", "We Are Bulletproof: The Eternal"],
   "2026-10-07": ["Home", "Outro: Wings"],
-  // Bogotá
   "2026-10-03": ["We Are Bulletproof Pt.2", "Mikrokosmos"],
   "2026-10-02": ["I'm Fine", "So What"],
-  // Los Angeles
   "2026-09-06": ["Whalien 52", "Spring Day"],
   "2026-09-05": ["Home", "Pied Piper"],
   "2026-09-02": ["Love Maze", "Silver Spoon"],
   "2026-09-01": ["Boy In Luv", "Magic Shop"],
-  // Chicago
   "2026-08-28": ["134340", "Mikrokosmos"],
   "2026-08-27": ["Tomorrow", "Hip Hop Phile"],
-  // Toronto
   "2026-08-23": ["00:00 (Zero O'Clock)", "Outro: Tear"],
   "2026-08-22": ["Outro: Wings", "Dope"],
-  // Arlington
   "2026-08-16": ["Butterfly", "DNA"],
   "2026-08-15": ["Permission to Dance", "Go Go"],
-  // Baltimore
   "2026-08-11": ["Just One Day", "Best of Me"],
   "2026-08-10": ["Telepathy", "Boy In Luv"],
-  // Foxborough
   "2026-08-06": ["Make It Right", "N.O"],
   "2026-08-05": ["Paradise", "No More Dream"],
-  // East Rutherford
   "2026-08-02": ["Autumn Leaves", "Go Go"],
   "2026-08-01": ["Dis-ease", "Run"],
-  // Paris
   "2026-07-18": ["So What", "We Are Bulletproof: The Eternal"],
   "2026-07-17": ["Boy With Luv", "Jump"],
-  // Munich
   "2026-07-12": ["Louder Than Bombs", "Blood Sweat & Tears"],
   "2026-07-11": ["Silver Spoon", "Pied Piper"],
-  // London
   "2026-07-07": ["Save Me", "Epilogue: Young Forever"],
   "2026-07-06": ["Life Goes On", "Dionysus"],
-  // Brussels
   "2026-07-02": ["ON", "For Youth"],
   "2026-07-01": ["Tomorrow", "Boy With Luv"],
-  // Madrid
   "2026-06-27": ["Mikrokosmos", "Best of Me"],
   "2026-06-26": ["Airplane Pt.2", "Outro: Wings"],
-  // Busan  (Jun 13 = 3 surprise songs; lalabas na "Ddaeng + Magic Shop" sa Song 2)
   "2026-06-13": ["Dimple", "Ddaeng", "Magic Shop"],
   "2026-06-12": ["Paldogangsan", "Ma City"],
-  // Las Vegas
   "2026-05-28": ["Boyz With Fun", "Danger"],
   "2026-05-27": ["Anpanman", "Attack on Bangtan"],
   "2026-05-24": ["Black Swan", "Spine Breaker"],
   "2026-05-23": ["Permission to Dance", "Go Go"],
-  // Stanford
   "2026-05-19": ["I Need U", "No More Dream"],
   "2026-05-17": ["Dope", "Blood Sweat & Tears"],
   "2026-05-16": ["N.O", "Anpanman"],
-  // Mexico City
   "2026-05-10": ["Airplane Pt.2", "Spring Day"],
   "2026-05-09": ["We Are Bulletproof Pt.2", "Just One Day"],
   "2026-05-07": ["Boy In Luv", "So What"],
-  // El Paso
   "2026-05-03": ["Dionysus", "Best of Me"],
   "2026-05-02": ["ON", "Outro: Wings"],
-  // Tampa
   "2026-04-28": ["Life Goes On", "Silver Spoon"],
   "2026-04-26": ["Boy With Luv", "Pied Piper"],
   "2026-04-25": ["Permission to Dance", "Magic Shop"],
-  // Tokyo
   "2026-04-18": ["Dope", "For You"],
   "2026-04-17": ["Save Me", "Crystal Snow"],
-  // Goyang
   "2026-04-12": ["Spring Day", "Run"],
   "2026-04-11": ["Take Two", "DNA"],
   "2026-04-09": ["Mikrokosmos", "I Need U"]
 };
 
-// Gawing rows (newest first) at kunin ang city galing sa schedule
 const showByDate = Object.fromEntries(shows.map(show => [show.iso, show]));
 
 const songRows = Object.entries(surpriseSongs)
@@ -479,24 +503,7 @@ const songRows = Object.entries(surpriseSongs)
   .sort((a, b) => b.iso.localeCompare(a.iso));
 
 // ===================================
-// 2b. DATA CHECK (makikita sa browser console: F12)
-//     Hinahanap nito ang mga na-overlook: show na walang song record,
-//     o song record na walang katugmang show.
-// ===================================
-
-(function checkData() {
-  const missing = shows.filter(s => s.state === "completed" && !surpriseSongs[s.iso]);
-  const orphan = Object.keys(surpriseSongs).filter(iso => !showByDate[iso]);
-  const future = Object.keys(surpriseSongs).filter(iso => showByDate[iso] && showByDate[iso].state === "upcoming");
-
-  if (missing.length) console.warn("Completed shows WITHOUT surprise-song record:", missing.map(s => `${s.date} ${s.city}`));
-  if (orphan.length) console.warn("Song records with NO matching show date:", orphan);
-  if (future.length) console.warn("Song records for shows that haven't happened yet:", future);
-  if (!missing.length && !orphan.length && !future.length) console.log("Data check OK: every completed show has a song record.");
-})();
-
-// ===================================
-// 3. STATS (auto-computed)
+// 3. STATS
 // ===================================
 
 const completedShows = shows.filter(show => show.state === "completed");
@@ -509,7 +516,7 @@ document.getElementById("songRecordCount").textContent = songRows.length;
 document.getElementById("songUpdated").textContent = `UPDATED ${SONGS_UPDATED}`;
 
 // ===================================
-// 4. NEXT UP (auto: unang upcoming show)
+// 4. NEXT UP
 // ===================================
 
 (function renderNextShow() {
@@ -542,7 +549,7 @@ document.getElementById("songUpdated").textContent = `UPDATED ${SONGS_UPDATED}`;
 })();
 
 // ===================================
-// 5. WORLD TOUR SCHEDULE DISPLAY
+// 5. WORLD TOUR SCHEDULE
 // ===================================
 
 let activeScheduleFilter = "all";
@@ -566,12 +573,10 @@ function renderSchedule(filter = activeScheduleFilter) {
             ${show.date}
             <small>LOCAL SHOW DATE</small>
           </div>
-
           <div class="place">
             <h3>${escapeHTML(show.city)}</h3>
             <p>${escapeHTML(show.venue)}</p>
           </div>
-
           <span class="status ${show.state === "upcoming" ? "upcoming" : ""}">
             ${show.state === "upcoming" ? "UPCOMING" : "COMPLETED"}
           </span>
@@ -590,7 +595,7 @@ document.getElementById("scheduleSearch").addEventListener("input", () => render
 renderSchedule();
 
 // ===================================
-// 6. SURPRISE SONGS SEARCH + DISPLAY
+// 6. SURPRISE SONGS
 // ===================================
 
 function renderSongs() {
@@ -619,26 +624,36 @@ document.getElementById("songSearch").addEventListener("input", renderSongs);
 renderSongs();
 
 // ===================================
-// 7. TOUR REPLAY ARCHIVE (auto from completed stops)
-//    Lagay lang ang replay link sa object na ito: replayLinks["Kaohsiung"] = "https://..."
-//    Pwede ring pangalan ng sariling page (halimbawa "goyang-replay.html").
+// 7. TOUR REPLAY ARCHIVE
 // ===================================
 
+// Replay page links
 const replayLinks = {
   "Goyang": "goyang-replay.html",
   "Tokyo": "tokyo-replay.html"
 };
 
-// Kapag http/https ang link, bubukas sa bagong tab. Kapag page mo mismo, same tab.
+// Actual thumbnail images
+const replayImages = {
+  "Goyang": "goyang.jpg",
+  "Tokyo": "tokyo.jpg"
+};
+
 function isExternalLink(url) {
   return /^https?:\/\//i.test(url);
 }
 
 function formatRange(dates) {
-  const first = dates[0], last = dates[dates.length - 1];
+  const first = dates[0];
+  const last = dates[dates.length - 1];
+
   const [y, m1, d1] = first.split("-");
   const [, m2, d2] = last.split("-");
-  if (first === last) return `${MONTHS[Number(m1) - 1]} ${d1}, ${y}`;
+
+  if (first === last) {
+    return `${MONTHS[Number(m1) - 1]} ${d1}, ${y}`;
+  }
+
   return m1 === m2
     ? `${MONTHS[Number(m1) - 1]} ${d1}-${d2}, ${y}`
     : `${MONTHS[Number(m1) - 1]} ${d1} - ${MONTHS[Number(m2) - 1]} ${d2}, ${y}`;
@@ -647,13 +662,17 @@ function formatRange(dates) {
 const replayStops = tour
   .map(stop => {
     const played = stop.dates.filter(iso => parseISO(iso) < TODAY);
+
     if (!played.length) return null;
+
     const cityName = stop.city.split(",")[0];
+
     return {
       city: cityName,
       date: formatRange(played),
       region: stop.region,
-      replayUrl: replayLinks[cityName] || ""
+      replayUrl: replayLinks[cityName] || "",
+      imageUrl: replayImages[cityName] || ""
     };
   })
   .filter(Boolean);
@@ -671,29 +690,48 @@ function renderReplays() {
   document.getElementById("replayGrid").innerHTML = filteredStops.length
     ? filteredStops.map(stop => `
         <article class="replay-card">
-          <div class="replay-thumb">
-            <span class="replay-wordmark">ARIRANG<span>.</span></span>
-            ${stop.replayUrl
-              ? '<span class="play-icon">▶</span>'
-              : '<span class="replay-pending">ARCHIVE ENTRY</span>'}
+
+          <div class="replay-thumb ${stop.imageUrl ? 'has-image' : ''}">
+
+            ${
+              stop.imageUrl
+                ? `
+                  <img
+                    class="replay-image"
+                    src="${escapeHTML(stop.imageUrl)}"
+                    alt="${escapeHTML(stop.city)} concert thumbnail"
+                    loading="lazy"
+                    onerror="this.style.display='none';this.parentElement.classList.remove('has-image');this.parentElement.innerHTML='<span class=&quot;replay-wordmark&quot;>ARIRANG<span>.</span></span><span class=&quot;replay-pending&quot;>IMAGE NOT FOUND</span>';"
+                  >
+                  <span class="play-icon">▶</span>
+                `
+                : `
+                  <span class="replay-wordmark">ARIRANG<span>.</span></span>
+                  <span class="replay-pending">ARCHIVE ENTRY</span>
+                `
+            }
+
           </div>
 
           <div class="replay-info">
             <small>${escapeHTML(stop.region.toUpperCase())} / ARIRANG TOUR</small>
             <h3>${escapeHTML(stop.city)}</h3>
-            <p>${stop.date}</p>
+            <p>${escapeHTML(stop.date)}</p>
 
             <a
               class="watch-btn"
-              href="${stop.replayUrl || '#'}"
-              ${stop.replayUrl
-                ? (isExternalLink(stop.replayUrl) ? 'target="_blank" rel="noopener"' : '')
-                : 'onclick="return false" title="Replay link not added yet"'}
+              href="${stop.replayUrl ? escapeHTML(stop.replayUrl) : '#'}"
+              ${
+                stop.replayUrl
+                  ? (isExternalLink(stop.replayUrl) ? 'target="_blank" rel="noopener noreferrer"' : '')
+                  : 'onclick="return false" title="Replay link not added yet"'
+              }
               style="${stop.replayUrl ? '' : 'opacity:.55;cursor:not-allowed'}"
             >
               ${stop.replayUrl ? 'WATCH REPLAY ↗' : 'REPLAY LINK PENDING'}
             </a>
           </div>
+
         </article>
       `).join("")
     : `<p class="empty-state">No concert stops found.</p>`;
