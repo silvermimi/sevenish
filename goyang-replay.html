@@ -15,7 +15,6 @@
     :root {
       --red: #f12d40;
       --ink: #101010;
-      --muted: #858585;
       --paper: #f1f1f1;
     }
 
@@ -35,6 +34,8 @@
       margin: 0 auto;
       padding: 28px 0 54px;
     }
+
+    /* NAVIGATION */
 
     .topline {
       display: flex;
@@ -76,10 +77,12 @@
       color: var(--red);
     }
 
-    /* FULL IMAGE - NO CROPPING */
+    /* GOYANG BANNER - 1800 × 710 */
 
     .hero {
       width: 100%;
+      max-width: 1800px;
+      aspect-ratio: 1800 / 710;
       margin: 0 auto 34px;
       background: #ededed;
       display: flex;
@@ -91,11 +94,12 @@
     .hero img {
       display: block;
       width: 100%;
-      height: auto;
-      max-height: 650px;
+      height: 100%;
       object-fit: contain;
       object-position: center;
     }
+
+    /* CONTENT */
 
     .eyebrow {
       color: var(--red);
@@ -119,6 +123,8 @@
       color: #777;
       margin: 0 0 25px;
     }
+
+    /* REPLAY CARDS */
 
     .days {
       display: grid;
@@ -188,6 +194,8 @@
       transform: translateY(-2px);
     }
 
+    /* FOOTER */
+
     .footer {
       margin-top: 40px;
       padding-top: 18px;
@@ -203,21 +211,23 @@
       text-transform: uppercase;
     }
 
+    /* MOBILE */
+
     @media(max-width:760px) {
-      .days {
-        grid-template-columns: 1fr;
+      .page {
+        width: calc(100% - 28px);
       }
 
-      .page {
-        width: min(100% - 28px, 560px);
+      .days {
+        grid-template-columns: 1fr;
       }
 
       .day {
         min-height: 170px;
       }
 
-      .hero img {
-        max-height: none;
+      .hero {
+        margin-bottom: 27px;
       }
     }
 
@@ -244,7 +254,9 @@
 
   <main class="page">
 
+    <!-- NAVIGATION -->
     <nav class="topline">
+
       <a class="brand" href="index.html">
         SEVENISH<span>.</span>
       </a>
@@ -253,13 +265,18 @@
         <a class="back" href="index.html">← Back Home</a>
         <a class="back" href="concerts.html">Tour Archive</a>
       </div>
+
     </nav>
 
-    <!-- COMPLETE GOYANG IMAGE -->
+    <!-- GOYANG IMAGE -->
     <header class="hero">
-      <img src="goyang.jpg" alt="Goyang concert banner">
+      <img
+        src="goyang.jpg"
+        alt="Goyang concert banner"
+      >
     </header>
 
+    <!-- REPLAY SECTION -->
     <section>
 
       <p class="eyebrow" id="region">
@@ -278,6 +295,7 @@
 
     </section>
 
+    <!-- FOOTER -->
     <footer class="footer">
       <span>SEVENISH. · SEVEN MEMBERS. ONE UNIVERSE.</span>
       <span>Made with love for ARMY</span>
@@ -300,7 +318,10 @@
     };
 
     const params = new URLSearchParams(window.location.search);
-    const requestedCity = (params.get('city') || 'goyang').toLowerCase();
+
+    const requestedCity =
+      (params.get('city') || 'goyang').toLowerCase();
+
     const data = replays[requestedCity] || replays.goyang;
 
     document.title = `${data.name} Replay | SEVENISH.`;
