@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,20 +75,27 @@
       color: var(--red);
     }
 
-    /* BANNER */
+    /* BANNER - FULL IMAGE VISIBLE */
 
     .hero {
-      background: #ededed;
-      height: 245px;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      background: #fff;
       overflow: hidden;
       margin-bottom: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .hero img {
       display: block;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      max-height: 600px;
+      object-fit: contain;
+      object-position: center;
     }
 
     .eyebrow {
@@ -224,7 +230,15 @@
       }
 
       .hero {
-        height: 210px;
+        height: auto;
+        min-height: 0;
+      }
+
+      .hero img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
       }
 
       .page {
