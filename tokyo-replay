@@ -90,7 +90,7 @@
       margin-bottom: 28px;
     }
 
-    /* FEATURED BANNER */
+    /* FEATURED BANNER - 1800 x 710 RATIO */
     .hero {
       width: 100%;
       aspect-ratio: 1800 / 710;
@@ -106,8 +106,8 @@
       height: 100%;
       object-fit: cover;
 
-      /* Move image downward to reveal faces */
-      object-position: center 70%;
+      /* Image moved 15 percentage points upward */
+      object-position: center 47%;
     }
 
     .section-label {
@@ -227,7 +227,7 @@
       }
 
       .hero img {
-        object-position: center 70%;
+        object-position: center 47%;
       }
 
       .concert-list {
@@ -255,6 +255,7 @@
     </header>
 
     <p class="eyebrow">ARIRANG WORLD TOUR</p>
+
     <h1>TOKYO REPLAY.</h1>
 
     <p class="intro">
