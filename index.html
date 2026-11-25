@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SEVENISH. | A BTS Fan Space</title>
+<meta name="description" content="SEVENISH is a fan-made space for BTS and ARMY: news, AUs, tour archive and more.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,7 @@
   --white: #ffffff;
   --gray: #f1f1f1;
   --muted: #777777;
+  --header-h: 78px;
 }
 
 * {
@@ -27,6 +28,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
 }
 
 body {
@@ -46,10 +48,16 @@ img {
   object-fit: cover;
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
 /* HEADER */
 
 header {
-  height: 78px;
+  height: var(--header-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -132,14 +140,15 @@ nav a.active {
   letter-spacing: 1px;
 }
 
-.tag {
-  display: inline-block;
-  background: var(--red);
-  color: white;
-  padding: 7px 12px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
+.view-all:hover {
+  text-decoration: underline;
+}
+
+.about-text {
+  max-width: 700px;
+  color: #666;
+  font-size: 14px;
+  line-height: 2;
 }
 
 /* HERO */
@@ -238,12 +247,13 @@ nav a.active {
 }
 
 .card {
+  display: block;
   background: white;
   overflow: hidden;
   transition: transform .25s;
 }
 
-.card:hover {
+a.card:hover {
   transform: translateY(-5px);
 }
 
@@ -288,6 +298,11 @@ nav a.active {
   line-height: 1.7;
 }
 
+.card .view-all {
+  display: inline-block;
+  margin-top: 18px;
+}
+
 /* ARCHIVE */
 
 .archive-grid {
@@ -297,6 +312,7 @@ nav a.active {
 }
 
 .archive-card {
+  display: block;
   position: relative;
   height: 270px;
   overflow: hidden;
@@ -309,6 +325,15 @@ nav a.active {
   transition: .3s;
 }
 
+/* dark fade so the title is always readable */
+.archive-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.75), transparent 60%);
+  pointer-events: none;
+}
+
 .archive-card:hover img {
   transform: scale(1.08);
   opacity: .5;
@@ -316,6 +341,7 @@ nav a.active {
 
 .archive-card h3 {
   position: absolute;
+  z-index: 1;
   bottom: 20px;
   left: 18px;
   right: 12px;
@@ -324,6 +350,11 @@ nav a.active {
   font-size: 26px;
   font-weight: 800;
   text-transform: uppercase;
+  transition: color .2s;
+}
+
+.archive-card:hover h3 {
+  color: #ff5260;
 }
 
 /* ARMY CORNER */
@@ -355,6 +386,11 @@ nav a.active {
   color: var(--black);
 }
 
+.army .primary-btn:hover {
+  background: var(--black);
+  color: white;
+}
+
 /* FOOTER */
 
 footer {
@@ -365,6 +401,7 @@ footer {
 }
 
 footer .logo {
+  display: inline-block;
   font-size: 38px;
   margin-bottom: 8px;
 }
@@ -389,11 +426,41 @@ footer .tagline {
   font-size: 10px;
   color: #cccccc;
   font-weight: 700;
+  transition: .2s;
+}
+
+.footer-links a:hover {
+  color: var(--red);
 }
 
 .copyright {
   font-size: 10px;
   color: #888888;
+  line-height: 1.6;
+}
+
+/* "COMING SOON" TOAST */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translate(-50%, 30px);
+  background: var(--black);
+  color: white;
+  border-left: 4px solid var(--red);
+  padding: 14px 22px;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s;
+  z-index: 200;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 /* MOBILE */
@@ -421,8 +488,8 @@ footer .tagline {
 }
 
 @media (max-width: 650px) {
-  header {
-    height: 68px;
+  :root {
+    --header-h: 68px;
   }
 
   .logo {
@@ -436,7 +503,7 @@ footer .tagline {
   nav {
     display: none;
     position: absolute;
-    top: 68px;
+    top: var(--header-h);
     left: 0;
     width: 100%;
     padding: 25px;
@@ -508,6 +575,16 @@ footer .tagline {
     font-size: 43px;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+  }
+}
 </style>
 </head>
 
@@ -518,8 +595,8 @@ footer .tagline {
 <header>
   <a href="#home" class="logo">SEVENISH<span>.</span></a>
 
-  <button class="menu-toggle" onclick="toggleMenu()"
-    aria-label="Toggle navigation">☰</button>
+  <button class="menu-toggle" id="menuToggle" type="button"
+    aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
   <nav id="navigation">
     <a href="#home" class="active">Home</a>
@@ -527,6 +604,7 @@ footer .tagline {
     <a href="#updates">Updates</a>
     <a href="#aus">AUs</a>
     <a href="#archive">Archive</a>
+    <a href="concerts.html">World Tour</a>
     <a href="#army">ARMY Corner</a>
   </nav>
 </header>
@@ -578,7 +656,7 @@ footer .tagline {
       <h2>WHAT IS SEVENISH?</h2>
     </div>
 
-    <p style="max-width:700px; color:#666; font-size:14px; line-height:2;">
+    <p class="about-text">
       SEVENISH is a fan-made space dedicated to BTS and ARMY.
       Discover the latest updates, explore fanfiction,
       revisit unforgettable performances and find
@@ -596,12 +674,12 @@ footer .tagline {
 
     <div class="section-heading">
       <h2>LATEST UPDATES</h2>
-      <a href="#" class="view-all">VIEW ALL ↗</a>
+      <a href="#" class="view-all coming-soon">VIEW ALL ↗</a>
     </div>
 
     <div class="card-grid">
 
-      <a href="#" class="card">
+      <a href="#" class="card coming-soon">
         <div class="card-image">
           <img src="images/bts-news.jpg"
             alt="BTS news"
@@ -609,13 +687,13 @@ footer .tagline {
         </div>
         <div class="card-info">
           <span class="category">LATEST NEWS</span>
-          <h3>BTS News & Updates</h3>
+          <h3>BTS News &amp; Updates</h3>
           <p>What's happening in Bangtan? Catch up on news,
           announcements and member activities.</p>
         </div>
       </a>
 
-      <a href="#" class="card">
+      <a href="#" class="card coming-soon">
         <div class="card-image">
           <img src="images/bts-au.jpg"
             alt="BTS stories"
@@ -623,7 +701,7 @@ footer .tagline {
         </div>
         <div class="card-info">
           <span class="category">FANFICTION</span>
-          <h3>AUs & Stories</h3>
+          <h3>AUs &amp; Stories</h3>
           <p>Your next reading obsession starts here.
           Discover completed and ongoing AUs.</p>
         </div>
@@ -640,8 +718,8 @@ footer .tagline {
   <div class="container">
 
     <div class="section-heading">
-      <h2>AUs & STORIES</h2>
-      <a href="#" class="view-all">READ MORE ↗</a>
+      <h2>AUs &amp; STORIES</h2>
+      <a href="#" class="view-all coming-soon">READ MORE ↗</a>
     </div>
 
     <div class="card-grid">
@@ -652,8 +730,7 @@ footer .tagline {
           <h3>Find Your Next Favorite AU</h3>
           <p>Explore fanfiction from different writers and
           discover stories worth reading.</p>
-          <br>
-          <a href="#" class="view-all">BROWSE STORIES ↗</a>
+          <a href="#" class="view-all coming-soon">BROWSE STORIES ↗</a>
         </div>
       </div>
 
@@ -663,8 +740,7 @@ footer .tagline {
           <h3>What's New in the AU World?</h3>
           <p>Keep up with new chapters, recently published
           stories and recommendations.</p>
-          <br>
-          <a href="#" class="view-all">EXPLORE AUs ↗</a>
+          <a href="#" class="view-all coming-soon">EXPLORE AUs ↗</a>
         </div>
       </div>
 
@@ -681,33 +757,34 @@ footer .tagline {
 
     <div class="section-heading">
       <h2>THE ARCHIVE</h2>
-      <a href="#" class="view-all">EXPLORE ALL ↗</a>
+      <a href="concerts.html" class="view-all">EXPLORE ALL ↗</a>
     </div>
 
     <div class="archive-grid">
 
-      <a href="#" class="archive-card">
+      <!-- Links to the Concert / Tour page (concerts.html) -->
+      <a href="concerts.html" class="archive-card">
         <img src="images/concerts.jpg"
           alt="Concerts"
           onerror="this.style.display='none'">
-        <h3>Concerts & Tours</h3>
+        <h3>Concerts &amp; Tours</h3>
       </a>
 
-      <a href="#" class="archive-card">
+      <a href="#" class="archive-card coming-soon">
         <img src="images/music.jpg"
           alt="Music and albums"
           onerror="this.style.display='none'">
-        <h3>Music & Albums</h3>
+        <h3>Music &amp; Albums</h3>
       </a>
 
-      <a href="#" class="archive-card">
+      <a href="#" class="archive-card coming-soon">
         <img src="images/photos.jpg"
           alt="BTS photos"
           onerror="this.style.display='none'">
-        <h3>Photos & Videos</h3>
+        <h3>Photos &amp; Videos</h3>
       </a>
 
-      <a href="#" class="archive-card">
+      <a href="#" class="archive-card coming-soon">
         <img src="images/memories.jpg"
           alt="BTS memories"
           onerror="this.style.display='none'">
@@ -731,7 +808,7 @@ footer .tagline {
     everything that makes being an ARMY special.
   </p>
 
-  <a href="#" class="primary-btn">VISIT ARMY CORNER ↗</a>
+  <a href="#" class="primary-btn coming-soon">VISIT ARMY CORNER ↗</a>
 </section>
 
 
@@ -739,7 +816,7 @@ footer .tagline {
 
 <footer>
 
-  <div class="logo">SEVENISH<span style="color:#e52336;">.</span></div>
+  <a href="#home" class="logo">SEVENISH<span>.</span></a>
 
   <div class="tagline">
     SEVEN MEMBERS. ONE UNIVERSE.
@@ -751,6 +828,7 @@ footer .tagline {
     <a href="#updates">UPDATES</a>
     <a href="#aus">AUs</a>
     <a href="#archive">ARCHIVE</a>
+    <a href="concerts.html">WORLD TOUR</a>
     <a href="#army">ARMY CORNER</a>
   </div>
 
@@ -762,27 +840,61 @@ footer .tagline {
 
 </footer>
 
+<div class="toast" id="toast" role="status" aria-live="polite">
+  This page is coming soon 💜
+</div>
+
 
 <script>
-function toggleMenu() {
-  document.getElementById('navigation').classList.toggle('show');
-}
+const nav = document.getElementById('navigation');
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.querySelectorAll('#navigation a');
+
+// Open / close mobile menu
+menuToggle.addEventListener('click', () => {
+  const open = nav.classList.toggle('show');
+  menuToggle.setAttribute('aria-expanded', open);
+});
 
 // Close mobile menu after clicking a link
-document.querySelectorAll('#navigation a').forEach(link => {
+navLinks.forEach(link => {
   link.addEventListener('click', () => {
-    document.getElementById('navigation').classList.remove('show');
+    nav.classList.remove('show');
+    menuToggle.setAttribute('aria-expanded', 'false');
   });
 });
 
-// Highlight active navigation link
-document.querySelectorAll('#navigation a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.querySelectorAll('#navigation a').forEach(item => {
-      item.classList.remove('active');
-    });
+// Highlight the nav link of the section currently on screen
+const sections = [...navLinks]
+  .filter(link => link.getAttribute('href').startsWith('#'))
+  .map(link => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+  .filter(item => item.section);
 
-    link.classList.add('active');
+function updateActiveLink() {
+  const scrollPos = window.scrollY + 120;
+  let current = sections[0];
+
+  sections.forEach(item => {
+    if (item.section.offsetTop <= scrollPos) current = item;
+  });
+
+  navLinks.forEach(link => link.classList.remove('active'));
+  if (current) current.link.classList.add('active');
+}
+
+window.addEventListener('scroll', updateActiveLink, { passive: true });
+updateActiveLink();
+
+// Pages that aren't built yet: don't jump to the top, show a small message
+const toast = document.getElementById('toast');
+let toastTimer;
+
+document.querySelectorAll('.coming-soon').forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
   });
 });
 </script>
