@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#090909">
-
   <title>Tour Replay Archive | SEVENISH.</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,8 +76,6 @@
       color: var(--red);
     }
 
-    /* BANNER IMAGE */
-
     .hero {
       background: #ededed;
       height: 245px;
@@ -116,8 +113,6 @@
       margin: 0 0 25px;
     }
 
-    /* REPLAY CARDS */
-
     .days {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -147,10 +142,34 @@
       line-height: 1;
     }
 
-    .day p {
-      font-size: 12px;
-      color: #777;
+    /* CITY + DATE */
+    .day .replay-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       margin: 0 0 20px;
+      font-family: Inter, Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: normal;
+      color: #777;
+    }
+
+    .day .replay-city,
+    .day .replay-date {
+      color: #777;
+      font: inherit;
+    }
+
+    /* SMALL DOT */
+    .day .meta-dot {
+      width: 2px;
+      height: 2px;
+      min-width: 2px;
+      min-height: 2px;
+      border-radius: 50%;
+      background: #777;
+      flex: 0 0 2px;
     }
 
     .watch {
@@ -174,8 +193,6 @@
       transform: translateY(-2px);
     }
 
-    /* FOOTER */
-
     .footer {
       margin-top: 40px;
       padding-top: 18px;
@@ -190,8 +207,6 @@
       letter-spacing: 1px;
       text-transform: uppercase;
     }
-
-    /* MOBILE */
 
     @media(max-width:760px) {
       .days {
@@ -235,9 +250,7 @@
   <main class="page">
 
     <!-- NAVIGATION -->
-
     <nav class="topline">
-
       <a class="brand" href="index.html">
         SEVENISH<span>.</span>
       </a>
@@ -246,19 +259,14 @@
         <a class="back" href="index.html">← Back Home</a>
         <a class="back" href="concerts.html">Tour Archive</a>
       </div>
-
     </nav>
 
-
-    <!-- BANNER IMAGE -->
-
+    <!-- BANNER -->
     <header class="hero">
       <img src="goyang.jpg" alt="Goyang concert banner">
     </header>
 
-
     <!-- REPLAY CONTENT -->
-
     <section>
 
       <p class="eyebrow" id="region">
@@ -277,9 +285,7 @@
 
     </section>
 
-
     <!-- FOOTER -->
-
     <footer class="footer">
       <span>SEVENISH. · SEVEN MEMBERS. ONE UNIVERSE.</span>
       <span>Made with love for ARMY</span>
@@ -287,10 +293,9 @@
 
   </main>
 
-
   <script>
 
-    // REPLAY LINKS
+    // REPLAY LINKS AND DATES
 
     const replays = {
 
@@ -299,9 +304,9 @@
         region: 'ASIA / ARIRANG TOUR',
 
         days: [
-          ['Day 1', 'https://t.me/bangtandept/9'],
-          ['Day 2', 'https://t.me/bangtandept/16'],
-          ['Day 3', 'https://t.me/bangtandept/17']
+          ['Day 1', 'APRIL 09', 'https://t.me/bangtandept/9'],
+          ['Day 2', 'APRIL 11', 'https://t.me/bangtandept/16'],
+          ['Day 3', 'APRIL 12', 'https://t.me/bangtandept/17']
         ]
       },
 
@@ -310,8 +315,8 @@
         region: 'ASIA / ARIRANG TOUR',
 
         days: [
-          ['Day 1', 'https://t.me/c/4325285226/15'],
-          ['Day 2', 'https://t.me/c/4325285226/8']
+          ['Day 1', '', 'https://t.me/c/4325285226/15'],
+          ['Day 2', '', 'https://t.me/c/4325285226/8']
         ]
       },
 
@@ -320,14 +325,13 @@
         region: 'NORTH AMERICA / ARIRANG TOUR',
 
         days: [
-          ['Day 1', 'https://t.me/c/4325285226/12'],
-          ['Day 2', 'https://t.me/c/4325285226/11'],
-          ['Day 3', 'https://t.me/c/4325285226/10']
+          ['Day 1', '', 'https://t.me/c/4325285226/12'],
+          ['Day 2', '', 'https://t.me/c/4325285226/11'],
+          ['Day 3', '', 'https://t.me/c/4325285226/10']
         ]
       }
 
     };
-
 
     // GET SELECTED CITY
 
@@ -338,8 +342,7 @@
 
     const data = replays[requestedCity] || replays.goyang;
 
-
-    // UPDATE PAGE CONTENT
+    // UPDATE PAGE
 
     document.title = `${data.name} Replay | SEVENISH.`;
 
@@ -347,11 +350,10 @@
 
     document.getElementById('city').textContent = data.name;
 
-
     // GENERATE REPLAY CARDS
 
     document.getElementById('days').innerHTML =
-      data.days.map(([label, url], index) => `
+      data.days.map(([label, date, url], index) => `
 
         <article class="day">
 
@@ -361,9 +363,13 @@
 
           <h2>${label.toUpperCase()}</h2>
 
-          <p>
-            ${data.name} · CONCERT REPLAY
-          </p>
+          ${date ? `
+            <p class="replay-meta">
+              <span class="replay-city">${data.name}</span>
+              <span class="meta-dot" aria-hidden="true"></span>
+              <span class="replay-date">${date}</span>
+            </p>
+          ` : ''}
 
           <a
             class="watch"
