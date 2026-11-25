@@ -38,7 +38,20 @@ nav a { font-size: 10px; font-weight: 800; text-transform: uppercase; }
 nav a:hover { color: var(--red); }
 .menu-btn { display: none; background: none; border: 0; font-size: 25px; cursor: pointer; }
 
-.hero { background: var(--black); color: white; padding: 85px 25px; }
+/* ===== TOP BANNER IMAGE ===== */
+.banner { position: relative; background: #000; overflow: hidden; }
+.banner img {
+  display: block; width: 100%;
+  height: clamp(260px, 46vw, 580px);
+  object-fit: cover; object-position: center 22%;
+}
+.banner::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40%;
+  background: linear-gradient(to bottom, rgba(17,17,17,0), var(--black));
+  pointer-events: none;
+}
+
+.hero { background: var(--black); color: white; padding: 20px 25px 85px; }
 .hero-inner { max-width: 1180px; margin: auto; }
 .eyebrow { color: #ff5363; font-size: 11px; font-weight: 800; letter-spacing: 3px; margin-bottom: 15px; }
 .hero h1 { font-family: 'Barlow Condensed'; font-size: clamp(75px, 12vw, 145px); line-height: .78; font-weight: 900; letter-spacing: -2px; }
@@ -46,7 +59,7 @@ nav a:hover { color: var(--red); }
 .hero p { color: #ccc; font-size: 13px; line-height: 1.8; max-width: 480px; margin-top: 28px; }
 .hero-stamp { display: inline-block; background: var(--red); color: white; padding: 10px 17px; font-size: 11px; font-weight: 800; margin-top: 25px; transform: rotate(-2deg); }
 
-.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 15px; padding: 35px 0; }
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 15px; padding: 35px 0; }
 .stat { background: var(--gray); padding: 22px; border-left: 4px solid var(--red); }
 .stat h2 { font-family: 'Barlow Condensed'; font-size: 43px; font-weight: 900; }
 .stat p { font-size: 10px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
@@ -60,7 +73,9 @@ section.content { padding: 65px 0; }
 .next-show small { font-size: 10px; font-weight: 800; letter-spacing: 2px; }
 .next-show h2 { font-family: 'Barlow Condensed'; font-size: 48px; line-height: 1; margin: 10px 0; }
 .next-show p { font-size: 12px; opacity: .9; }
-.next-date { font-family: 'Barlow Condensed'; font-size: 58px; font-weight: 900; text-align: right; }
+.next-show .next-meta { margin-top: 6px; font-weight: 700; }
+.next-date { font-family: 'Barlow Condensed'; font-size: 58px; font-weight: 900; text-align: right; line-height: .95; }
+.next-date small { display: block; font-family: 'DM Sans'; font-size: 10px; letter-spacing: 1px; margin-top: 8px; }
 
 .schedule-tools, .song-tools { margin-bottom: 16px; }
 .schedule-tools input, .song-tools input {
@@ -89,9 +104,12 @@ section.content { padding: 65px 0; }
 .song-intro { font-size: 12px; line-height: 1.8; color: var(--muted); margin: -10px 0 25px; }
 .song-table { width: 100%; border-collapse: collapse; background: white; text-align: left; }
 .song-table th { background: var(--black); color: white; padding: 15px; font-size: 10px; text-transform: uppercase; }
-.song-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 11px; }
+.song-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 11px; vertical-align: top; }
 .song-table tr:hover td { background: #fafafa; }
+.song-table .col-date { white-space: nowrap; }
 .song-name { font-weight: 800; }
+.song-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.song-chip { background: var(--gray); border-left: 3px solid var(--red); padding: 6px 10px; font-weight: 800; font-size: 11px; }
 .song-note { font-size: 10px; color: var(--muted); margin-top: 15px; }
 
 .replays { background: white; }
@@ -131,8 +149,8 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
   .menu-btn { display: block; }
   nav { display: none; position: absolute; top: 75px; left: 0; right: 0; background: white; padding: 25px; flex-direction: column; }
   nav.show { display: flex; }
-  .hero { padding: 70px 25px; }
-  .stats { gap: 8px; }
+  .hero { padding: 15px 25px 70px; }
+  .stats { grid-template-columns: repeat(2,1fr); gap: 8px; }
   .stat { padding: 13px; }
   .stat h2 { font-size: 32px; }
   .schedule-item { grid-template-columns: 75px 1fr; gap: 10px; }
@@ -141,10 +159,10 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
   .replay-thumb { height: 130px; }
   .next-show h2 { font-size: 36px; }
   .song-table th, .song-table td { padding: 10px 7px; font-size: 9px; }
+  .song-chip { font-size: 9px; padding: 5px 7px; }
 }
 @media(max-width:460px) {
   .replay-grid { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: repeat(3,1fr); }
   .next-show { grid-template-columns: 1fr auto; padding: 20px; }
   .next-date { font-size: 43px; }
   .replay-thumb { height: 190px; }
@@ -179,6 +197,11 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
   </nav>
 </header>
 
+<!-- TOP BANNER: ilagay ang bts-banner.jpg sa parehong folder ng file na ito -->
+<div class="banner">
+  <img src="bts-banner.jpg" alt="BTS group photo for the ARIRANG World Tour" fetchpriority="high">
+</div>
+
 <section class="hero">
   <div class="hero-inner">
     <div class="eyebrow">SEVENISH. PRESENTS</div>
@@ -191,21 +214,15 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
 <main class="container">
 
   <div class="stats">
-    <div class="stat"><h2 id="completedCount">65</h2><p>Completed shows listed</p></div>
-    <div class="stat"><h2 id="songRecordCount">65</h2><p>Surprise-song show records</p></div>
-    <div class="stat"><h2 id="totalShowCount">85</h2><p>Shows in this schedule</p></div>
+    <div class="stat"><h2 id="completedCount">0</h2><p>Completed shows</p></div>
+    <div class="stat"><h2 id="upcomingCount">0</h2><p>Upcoming shows</p></div>
+    <div class="stat"><h2 id="totalShowCount">0</h2><p>Total shows in schedule</p></div>
+    <div class="stat"><h2 id="songRecordCount">0</h2><p>Surprise-song show records</p></div>
   </div>
 
   <section class="content">
     <div class="section-title"><h2>NEXT UP</h2><span>UPCOMING SHOW</span></div>
-    <div class="next-show">
-      <div>
-        <small>NEXT TOUR STOP</small>
-        <h2>BANGKOK, THAILAND</h2>
-        <p>Rajamangala National Stadium</p>
-      </div>
-      <div class="next-date">DEC<br>03</div>
-    </div>
+    <div class="next-show" id="nextShow"></div>
   </section>
 
   <section class="content" id="schedule">
@@ -225,7 +242,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
 
 <section class="content surprise-section" id="surprises">
   <div class="container">
-    <div class="section-title"><h2>SURPRISE SONG TRACKER</h2><span>UPDATED NOV 22, 2026</span></div>
+    <div class="section-title"><h2>SURPRISE SONG TRACKER</h2><span id="songUpdated">UPDATED</span></div>
     <p class="song-intro">The songs we didn't expect but will never forget. Browse the surprise-song records from each ARIRANG World Tour stop.</p>
     <div class="song-tools">
       <input type="search" id="songSearch" placeholder="Search a song, city or date..." aria-label="Search surprise songs">
@@ -233,7 +250,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
     <div style="overflow-x:auto;">
       <table class="song-table">
         <thead>
-          <tr><th>Date</th><th>City</th><th>Surprise Song 1</th><th>Surprise Song 2</th></tr>
+          <tr><th>Date</th><th>City</th><th>Surprise Songs</th></tr>
         </thead>
         <tbody id="songList"></tbody>
       </table>
@@ -254,6 +271,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
         <option value="North America">North America</option>
         <option value="Europe">Europe</option>
         <option value="Latin America">Latin America</option>
+        <option value="Oceania">Oceania</option>
       </select>
     </div>
     <div class="replay-grid" id="replayGrid"></div>
@@ -271,236 +289,268 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--red); outline-o
 <script>
 
 // ===================================
-// 1. WORLD TOUR SCHEDULE DATA
+// 0. HELPERS
 // ===================================
 
-const shows = [
-  {date:"APR 09, 2026",city:"Goyang, South Korea",venue:"Goyang Stadium",state:"completed"},
-  {date:"APR 11, 2026",city:"Goyang, South Korea",venue:"Goyang Stadium",state:"completed"},
-  {date:"APR 12, 2026",city:"Goyang, South Korea",venue:"Goyang Stadium",state:"completed"},
-  {date:"APR 17, 2026",city:"Tokyo, Japan",venue:"Tokyo Dome",state:"completed"},
-  {date:"APR 18, 2026",city:"Tokyo, Japan",venue:"Tokyo Dome",state:"completed"},
-  {date:"APR 25, 2026",city:"Tampa, USA",venue:"Raymond James Stadium",state:"completed"},
-  {date:"APR 26, 2026",city:"Tampa, USA",venue:"Raymond James Stadium",state:"completed"},
-  {date:"APR 28, 2026",city:"Tampa, USA",venue:"Raymond James Stadium",state:"completed"},
-  {date:"MAY 02, 2026",city:"El Paso, USA",venue:"Sun Bowl Stadium",state:"completed"},
-  {date:"MAY 03, 2026",city:"El Paso, USA",venue:"Sun Bowl Stadium",state:"completed"},
-  {date:"MAY 07, 2026",city:"Mexico City, Mexico",venue:"Estadio GNP Seguros",state:"completed"},
-  {date:"MAY 09, 2026",city:"Mexico City, Mexico",venue:"Estadio GNP Seguros",state:"completed"},
-  {date:"MAY 10, 2026",city:"Mexico City, Mexico",venue:"Estadio GNP Seguros",state:"completed"},
-  {date:"MAY 16, 2026",city:"Stanford, USA",venue:"Stanford Stadium",state:"completed"},
-  {date:"MAY 17, 2026",city:"Stanford, USA",venue:"Stanford Stadium",state:"completed"},
-  {date:"MAY 19, 2026",city:"Stanford, USA",venue:"Stanford Stadium",state:"completed"},
-  {date:"MAY 23, 2026",city:"Las Vegas, USA",venue:"Allegiant Stadium",state:"completed"},
-  {date:"MAY 24, 2026",city:"Las Vegas, USA",venue:"Allegiant Stadium",state:"completed"},
-  {date:"MAY 27, 2026",city:"Las Vegas, USA",venue:"Allegiant Stadium",state:"completed"},
-  {date:"MAY 28, 2026",city:"Las Vegas, USA",venue:"Allegiant Stadium",state:"completed"},
-  {date:"JUN 12, 2026",city:"Busan, South Korea",venue:"Busan Asiad Main Stadium",state:"completed"},
-  {date:"JUN 13, 2026",city:"Busan, South Korea",venue:"Busan Asiad Main Stadium",state:"completed"},
-  {date:"JUN 26, 2026",city:"Madrid, Spain",venue:"Riyadh Air Metropolitano",state:"completed"},
-  {date:"JUN 27, 2026",city:"Madrid, Spain",venue:"Riyadh Air Metropolitano",state:"completed"},
-  {date:"JUL 01, 2026",city:"Brussels, Belgium",venue:"King Baudouin Stadium",state:"completed"},
-  {date:"JUL 02, 2026",city:"Brussels, Belgium",venue:"King Baudouin Stadium",state:"completed"},
-  {date:"JUL 06, 2026",city:"London, UK",venue:"Tottenham Hotspur Stadium",state:"completed"},
-  {date:"JUL 07, 2026",city:"London, UK",venue:"Tottenham Hotspur Stadium",state:"completed"},
-  {date:"JUL 11, 2026",city:"Munich, Germany",venue:"Allianz Arena",state:"completed"},
-  {date:"JUL 12, 2026",city:"Munich, Germany",venue:"Allianz Arena",state:"completed"},
-  {date:"JUL 17, 2026",city:"Paris, France",venue:"Stade de France",state:"completed"},
-  {date:"JUL 18, 2026",city:"Paris, France",venue:"Stade de France",state:"completed"},
-  {date:"AUG 01, 2026",city:"East Rutherford, USA",venue:"MetLife Stadium",state:"completed"},
-  {date:"AUG 02, 2026",city:"East Rutherford, USA",venue:"MetLife Stadium",state:"completed"},
-  {date:"AUG 05, 2026",city:"Foxborough, USA",venue:"Gillette Stadium",state:"completed"},
-  {date:"AUG 06, 2026",city:"Foxborough, USA",venue:"Gillette Stadium",state:"completed"},
-  {date:"AUG 10, 2026",city:"Baltimore, USA",venue:"M&T Bank Stadium",state:"completed"},
-  {date:"AUG 11, 2026",city:"Baltimore, USA",venue:"M&T Bank Stadium",state:"completed"},
-  {date:"AUG 15, 2026",city:"Arlington, USA",venue:"AT&T Stadium",state:"completed"},
-  {date:"AUG 16, 2026",city:"Arlington, USA",venue:"AT&T Stadium",state:"completed"},
-  {date:"AUG 22, 2026",city:"Toronto, Canada",venue:"Rogers Stadium",state:"completed"},
-  {date:"AUG 23, 2026",city:"Toronto, Canada",venue:"Rogers Stadium",state:"completed"},
-  {date:"AUG 27, 2026",city:"Chicago, USA",venue:"Soldier Field",state:"completed"},
-  {date:"AUG 28, 2026",city:"Chicago, USA",venue:"Soldier Field",state:"completed"},
-  {date:"SEP 01, 2026",city:"Los Angeles, USA",venue:"SoFi Stadium",state:"completed"},
-  {date:"SEP 02, 2026",city:"Los Angeles, USA",venue:"SoFi Stadium",state:"completed"},
-  {date:"SEP 05, 2026",city:"Los Angeles, USA",venue:"SoFi Stadium",state:"completed"},
-  {date:"SEP 06, 2026",city:"Los Angeles, USA",venue:"SoFi Stadium",state:"completed"},
-  {date:"OCT 02, 2026",city:"Bogotá, Colombia",venue:"Estadio El Campín",state:"completed"},
-  {date:"OCT 03, 2026",city:"Bogotá, Colombia",venue:"Estadio El Campín",state:"completed"},
-  {date:"OCT 07, 2026",city:"Lima, Peru",venue:"Estadio San Marcos",state:"completed"},
-  {date:"OCT 09, 2026",city:"Lima, Peru",venue:"Estadio San Marcos",state:"completed"},
-  {date:"OCT 10, 2026",city:"Lima, Peru",venue:"Estadio San Marcos",state:"completed"},
-  {date:"OCT 14, 2026",city:"Santiago, Chile",venue:"Estadio Nacional",state:"completed"},
-  {date:"OCT 16, 2026",city:"Santiago, Chile",venue:"Estadio Nacional",state:"completed"},
-  {date:"OCT 17, 2026",city:"Santiago, Chile",venue:"Estadio Nacional",state:"completed"},
-  {date:"OCT 21, 2026",city:"Buenos Aires, Argentina",venue:"Estadio Único de La Plata",state:"completed"},
-  {date:"OCT 23, 2026",city:"Buenos Aires, Argentina",venue:"Estadio Único de La Plata",state:"completed"},
-  {date:"OCT 24, 2026",city:"Buenos Aires, Argentina",venue:"Estadio Único de La Plata",state:"completed"},
-  {date:"OCT 28, 2026",city:"São Paulo, Brazil",venue:"Estádio do MorumBIS",state:"completed"},
-  {date:"OCT 30, 2026",city:"São Paulo, Brazil",venue:"Estádio do MorumBIS",state:"completed"},
-  {date:"OCT 31, 2026",city:"São Paulo, Brazil",venue:"Estádio do MorumBIS",state:"completed"},
-  {date:"NOV 19, 2026",city:"Kaohsiung, Taiwan",venue:"Kaohsiung National Stadium",state:"completed"},
-  {date:"NOV 21, 2026",city:"Kaohsiung, Taiwan",venue:"Kaohsiung National Stadium",state:"completed"},
-  {date:"NOV 22, 2026",city:"Kaohsiung, Taiwan",venue:"Kaohsiung National Stadium",state:"completed"},
+const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 
-  {date:"DEC 03, 2026",city:"Bangkok, Thailand",venue:"Rajamangala National Stadium",state:"upcoming"},
-  {date:"DEC 05, 2026",city:"Bangkok, Thailand",venue:"Rajamangala National Stadium",state:"upcoming"},
-  {date:"DEC 06, 2026",city:"Bangkok, Thailand",venue:"Rajamangala National Stadium",state:"upcoming"},
-  {date:"DEC 12, 2026",city:"Kuala Lumpur, Malaysia",venue:"TM Stadium Nasional",state:"upcoming"},
-  {date:"DEC 13, 2026",city:"Kuala Lumpur, Malaysia",venue:"TM Stadium Nasional",state:"upcoming"},
-  {date:"DEC 17, 2026",city:"Singapore",venue:"National Stadium",state:"upcoming"},
-  {date:"DEC 19, 2026",city:"Singapore",venue:"National Stadium",state:"upcoming"},
-  {date:"DEC 20, 2026",city:"Singapore",venue:"National Stadium",state:"upcoming"},
-  {date:"DEC 22, 2026",city:"Singapore",venue:"National Stadium",state:"upcoming"},
-  {date:"DEC 26, 2026",city:"Jakarta, Indonesia",venue:"Gelora Bung Karno Main Stadium",state:"upcoming"},
-  {date:"DEC 27, 2026",city:"Jakarta, Indonesia",venue:"Gelora Bung Karno Main Stadium",state:"upcoming"},
-  {date:"FEB 12, 2027",city:"Melbourne, Australia",venue:"Marvel Stadium",state:"upcoming"},
-  {date:"FEB 13, 2027",city:"Melbourne, Australia",venue:"Marvel Stadium",state:"upcoming"},
-  {date:"FEB 20, 2027",city:"Sydney, Australia",venue:"Accor Stadium",state:"upcoming"},
-  {date:"FEB 21, 2027",city:"Sydney, Australia",venue:"Accor Stadium",state:"upcoming"},
-  {date:"MAR 04, 2027",city:"Hong Kong",venue:"Kai Tak Stadium",state:"upcoming"},
-  {date:"MAR 06, 2027",city:"Hong Kong",venue:"Kai Tak Stadium",state:"upcoming"},
-  {date:"MAR 07, 2027",city:"Hong Kong",venue:"Kai Tak Stadium",state:"upcoming"},
-  {date:"MAR 13, 2027",city:"Bulacan, Philippines",venue:"Philippine Sports Stadium",state:"upcoming"},
-  {date:"MAR 14, 2027",city:"Bulacan, Philippines",venue:"Philippine Sports Stadium",state:"upcoming"}
+// "2026-04-09" -> Date (local time, walang timezone shift)
+function parseISO(iso) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function formatDate(iso) {
+  const [y, m, d] = iso.split("-");
+  return `${MONTHS[Number(m) - 1]} ${d}, ${y}`;
+}
+
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, ch => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[ch]));
+}
+
+// Today (midnight). Ang show ay "completed" kapag lumipas na ang petsa niya.
+const TODAY = new Date();
+TODAY.setHours(0, 0, 0, 0);
+
+// ===================================
+// 1. WORLD TOUR SCHEDULE DATA
+//    Isang entry kada city/stop. Dates ang nag-de-decide ng completed/upcoming.
+// ===================================
+
+const tour = [
+  // --- 2026 ---
+  {city:"Goyang, South Korea", venue:"Goyang Stadium", region:"Asia", dates:["2026-04-09","2026-04-11","2026-04-12"]},
+  {city:"Tokyo, Japan", venue:"Tokyo Dome", region:"Asia", dates:["2026-04-17","2026-04-18"]},
+  {city:"Tampa, USA", venue:"Raymond James Stadium", region:"North America", dates:["2026-04-25","2026-04-26","2026-04-28"]},
+  {city:"El Paso, USA", venue:"Sun Bowl Stadium", region:"North America", dates:["2026-05-02","2026-05-03"]},
+  {city:"Mexico City, Mexico", venue:"Estadio GNP Seguros", region:"Latin America", dates:["2026-05-07","2026-05-09","2026-05-10"]},
+  {city:"Stanford, USA", venue:"Stanford Stadium", region:"North America", dates:["2026-05-16","2026-05-17","2026-05-19"]},
+  {city:"Las Vegas, USA", venue:"Allegiant Stadium", region:"North America", dates:["2026-05-23","2026-05-24","2026-05-27","2026-05-28"]},
+  {city:"Busan, South Korea", venue:"Busan Asiad Main Stadium", region:"Asia", dates:["2026-06-12","2026-06-13"]},
+  {city:"Madrid, Spain", venue:"Riyadh Air Metropolitano", region:"Europe", dates:["2026-06-26","2026-06-27"]},
+  {city:"Brussels, Belgium", venue:"King Baudouin Stadium", region:"Europe", dates:["2026-07-01","2026-07-02"]},
+  {city:"London, UK", venue:"Tottenham Hotspur Stadium", region:"Europe", dates:["2026-07-06","2026-07-07"]},
+  {city:"Munich, Germany", venue:"Allianz Arena", region:"Europe", dates:["2026-07-11","2026-07-12"]},
+  {city:"Paris, France", venue:"Stade de France", region:"Europe", dates:["2026-07-17","2026-07-18"]},
+  {city:"East Rutherford, USA", venue:"MetLife Stadium", region:"North America", dates:["2026-08-01","2026-08-02"]},
+  {city:"Foxborough, USA", venue:"Gillette Stadium", region:"North America", dates:["2026-08-05","2026-08-06"]},
+  {city:"Baltimore, USA", venue:"M&T Bank Stadium", region:"North America", dates:["2026-08-10","2026-08-11"]},
+  {city:"Arlington, USA", venue:"AT&T Stadium", region:"North America", dates:["2026-08-15","2026-08-16"]},
+  {city:"Toronto, Canada", venue:"Rogers Stadium", region:"North America", dates:["2026-08-22","2026-08-23"]},
+  {city:"Chicago, USA", venue:"Soldier Field", region:"North America", dates:["2026-08-27","2026-08-28"]},
+  {city:"Los Angeles, USA", venue:"SoFi Stadium", region:"North America", dates:["2026-09-01","2026-09-02","2026-09-05","2026-09-06"]},
+  {city:"Bogotá, Colombia", venue:"Estadio El Campín", region:"Latin America", dates:["2026-10-02","2026-10-03"]},
+  {city:"Lima, Peru", venue:"Estadio San Marcos", region:"Latin America", dates:["2026-10-07","2026-10-09","2026-10-10"]},
+  {city:"Santiago, Chile", venue:"Estadio Nacional", region:"Latin America", dates:["2026-10-14","2026-10-16","2026-10-17"]},
+  {city:"Buenos Aires, Argentina", venue:"Estadio Único de La Plata", region:"Latin America", dates:["2026-10-21","2026-10-23","2026-10-24"]},
+  {city:"São Paulo, Brazil", venue:"Estádio do MorumBIS", region:"Latin America", dates:["2026-10-28","2026-10-30","2026-10-31"]},
+  {city:"Kaohsiung, Taiwan", venue:"Kaohsiung National Stadium", region:"Asia", dates:["2026-11-19","2026-11-21","2026-11-22"]},
+  {city:"Bangkok, Thailand", venue:"Rajamangala National Stadium", region:"Asia", dates:["2026-12-03","2026-12-05","2026-12-06"]},
+  {city:"Kuala Lumpur, Malaysia", venue:"TM Stadium Nasional", region:"Asia", dates:["2026-12-12","2026-12-13"]},
+  {city:"Singapore", venue:"National Stadium", region:"Asia", dates:["2026-12-17","2026-12-19","2026-12-20","2026-12-22"]},
+  {city:"Jakarta, Indonesia", venue:"Gelora Bung Karno Main Stadium", region:"Asia", dates:["2026-12-26","2026-12-27","2026-12-29"]},
+
+  // --- 2027 ---
+  {city:"Melbourne, Australia", venue:"Marvel Stadium", region:"Oceania", dates:["2027-02-10","2027-02-12","2027-02-13"]},
+  {city:"Sydney, Australia", venue:"Accor Stadium", region:"Oceania", dates:["2027-02-20","2027-02-21"]},
+  {city:"Hong Kong", venue:"Kai Tak Stadium", region:"Asia", dates:["2027-03-04","2027-03-06","2027-03-07"]},
+  {city:"Bulacan, Philippines", venue:"Philippine Sports Stadium", region:"Asia", dates:["2027-03-13","2027-03-14","2027-03-16"]}
 ];
+
+// Gawing flat list ng bawat show + auto status base sa petsa
+const shows = tour
+  .flatMap(stop => stop.dates.map(iso => ({
+    iso,
+    date: formatDate(iso),
+    city: stop.city,
+    venue: stop.venue,
+    region: stop.region,
+    state: parseISO(iso) < TODAY ? "completed" : "upcoming"
+  })))
+  .sort((a, b) => a.iso.localeCompare(b.iso));
 
 // ===================================
 // 2. SURPRISE SONGS DATA
+//    Naka-key by date. Ang city ay kinukuha automatically sa schedule,
+//    kaya hindi na magkakamali ang city/date match.
 // ===================================
 
-const songs = [
-  ["NOV 22, 2026","Kaohsiung","Embarrassed","Boy With Luv"],
-  ["NOV 21, 2026","Kaohsiung","Sea","Boy In Luv"],
-  ["NOV 19, 2026","Kaohsiung","DNA","Answer: Love Myself"],
+const SONGS_UPDATED = "NOV 22, 2026";
 
-  ["OCT 31, 2026","São Paulo","Ddaeng","BTS Cypher Pt.3: Killer"],
-  ["OCT 30, 2026","São Paulo","Airplane Pt.2","I Need U"],
-  ["OCT 28, 2026","São Paulo","Black Swan","Silver Spoon"],
+const surpriseSongs = {
+  // Kaohsiung
+  "2026-11-22": ["Embarrassed", "Boy With Luv"],
+  "2026-11-21": ["Sea", "Boy In Luv"],
+  "2026-11-19": ["DNA", "Answer: Love Myself"],
+  // São Paulo
+  "2026-10-31": ["Ddaeng", "BTS Cypher Pt.3: Killer"],
+  "2026-10-30": ["Airplane Pt.2", "I Need U"],
+  "2026-10-28": ["Black Swan", "Silver Spoon"],
+  // Buenos Aires
+  "2026-10-24": ["Lost", "BTS Cypher 4"],
+  "2026-10-23": ["Attack on Bangtan", "Epilogue: Young Forever"],
+  "2026-10-21": ["Hold Me Tight", "Dionysus"],
+  // Santiago
+  "2026-10-17": ["Jump", "Spine Breaker"],
+  "2026-10-16": ["Telepathy", "Heartbeat"],
+  "2026-10-14": ["Run", "Save Me"],
+  // Lima
+  "2026-10-10": ["Outro: House of Cards", "UGH!"],
+  "2026-10-09": ["Paldogangsan", "We Are Bulletproof: The Eternal"],
+  "2026-10-07": ["Home", "Outro: Wings"],
+  // Bogotá
+  "2026-10-03": ["We Are Bulletproof Pt.2", "Mikrokosmos"],
+  "2026-10-02": ["I'm Fine", "So What"],
+  // Los Angeles
+  "2026-09-06": ["Whalien 52", "Spring Day"],
+  "2026-09-05": ["Home", "Pied Piper"],
+  "2026-09-02": ["Love Maze", "Silver Spoon"],
+  "2026-09-01": ["Boy In Luv", "Magic Shop"],
+  // Chicago
+  "2026-08-28": ["134340", "Mikrokosmos"],
+  "2026-08-27": ["Tomorrow", "Hip Hop Phile"],
+  // Toronto
+  "2026-08-23": ["00:00 (Zero O'Clock)", "Outro: Tear"],
+  "2026-08-22": ["Outro: Wings", "Dope"],
+  // Arlington
+  "2026-08-16": ["Butterfly", "DNA"],
+  "2026-08-15": ["Permission to Dance", "Go Go"],
+  // Baltimore
+  "2026-08-11": ["Just One Day", "Best of Me"],
+  "2026-08-10": ["Telepathy", "Boy In Luv"],
+  // Foxborough
+  "2026-08-06": ["Make It Right", "N.O"],
+  "2026-08-05": ["Paradise", "No More Dream"],
+  // East Rutherford
+  "2026-08-02": ["Autumn Leaves", "Go Go"],
+  "2026-08-01": ["Dis-ease", "Run"],
+  // Paris
+  "2026-07-18": ["So What", "We Are Bulletproof: The Eternal"],
+  "2026-07-17": ["Boy With Luv", "Jump"],
+  // Munich
+  "2026-07-12": ["Louder Than Bombs", "Blood Sweat & Tears"],
+  "2026-07-11": ["Silver Spoon", "Pied Piper"],
+  // London
+  "2026-07-07": ["Save Me", "Epilogue: Young Forever"],
+  "2026-07-06": ["Life Goes On", "Dionysus"],
+  // Brussels
+  "2026-07-02": ["ON", "For Youth"],
+  "2026-07-01": ["Tomorrow", "Boy With Luv"],
+  // Madrid
+  "2026-06-27": ["Mikrokosmos", "Best of Me"],
+  "2026-06-26": ["Airplane Pt.2", "Outro: Wings"],
+  // Busan  (Jun 13 = 3 songs, kaya hiniwalay na ang "Ddaeng + Magic Shop")
+  "2026-06-13": ["Dimple", "Ddaeng", "Magic Shop"],
+  "2026-06-12": ["Paldogangsan", "Ma City"],
+  // Las Vegas
+  "2026-05-28": ["Boyz With Fun", "Danger"],
+  "2026-05-27": ["Anpanman", "Attack on Bangtan"],
+  "2026-05-24": ["Black Swan", "Spine Breaker"],
+  "2026-05-23": ["Permission to Dance", "Go Go"],
+  // Stanford
+  "2026-05-19": ["I Need U", "No More Dream"],
+  "2026-05-17": ["Dope", "Blood Sweat & Tears"],
+  "2026-05-16": ["N.O", "Anpanman"],
+  // Mexico City
+  "2026-05-10": ["Airplane Pt.2", "Spring Day"],
+  "2026-05-09": ["We Are Bulletproof Pt.2", "Just One Day"],
+  "2026-05-07": ["Boy In Luv", "So What"],
+  // El Paso
+  "2026-05-03": ["Dionysus", "Best of Me"],
+  "2026-05-02": ["ON", "Outro: Wings"],
+  // Tampa
+  "2026-04-28": ["Life Goes On", "Silver Spoon"],
+  "2026-04-26": ["Boy With Luv", "Pied Piper"],
+  "2026-04-25": ["Permission to Dance", "Magic Shop"],
+  // Tokyo
+  "2026-04-18": ["Dope", "For You"],
+  "2026-04-17": ["Save Me", "Crystal Snow"],
+  // Goyang
+  "2026-04-12": ["Spring Day", "Run"],
+  "2026-04-11": ["Take Two", "DNA"],
+  "2026-04-09": ["Mikrokosmos", "I Need U"]
+};
 
-  ["OCT 24, 2026","Buenos Aires","Lost","BTS Cypher 4"],
-  ["OCT 23, 2026","Buenos Aires","Attack on Bangtan","Epilogue: Young Forever"],
-  ["OCT 21, 2026","Buenos Aires","Hold Me Tight","Dionysus"],
+// Gawing rows (newest first) at kunin ang city galing sa schedule
+const showByDate = Object.fromEntries(shows.map(show => [show.iso, show]));
 
-  ["OCT 17, 2026","Santiago","Jump","Spine Breaker"],
-  ["OCT 16, 2026","Santiago","Telepathy","Heartbeat"],
-  ["OCT 14, 2026","Santiago","Run","Save Me"],
-
-  ["OCT 10, 2026","Lima","Outro: House of Cards","UGH!"],
-  ["OCT 09, 2026","Lima","Paldogangsan","We Are Bulletproof: The Eternal"],
-  ["OCT 07, 2026","Lima","Home","Outro: Wings"],
-
-  ["OCT 03, 2026","Bogotá","We Are Bulletproof Pt.2","Mikrokosmos"],
-  ["OCT 02, 2026","Bogotá","I'm Fine","So What"],
-
-  ["SEP 06, 2026","Los Angeles","Whalien 52","Spring Day"],
-  ["SEP 05, 2026","Los Angeles","Home","Pied Piper"],
-  ["SEP 02, 2026","Los Angeles","Love Maze","Silver Spoon"],
-  ["SEP 01, 2026","Los Angeles","Boy In Luv","Magic Shop"],
-
-  ["AUG 28, 2026","Chicago","134340","Mikrokosmos"],
-  ["AUG 27, 2026","Chicago","Tomorrow","Hip Hop Phile"],
-
-  ["AUG 23, 2026","Toronto","00:00 (Zero O'Clock)","Outro: Tear"],
-  ["AUG 22, 2026","Toronto","Outro: Wings","Dope"],
-
-  ["AUG 16, 2026","Arlington","Butterfly","DNA"],
-  ["AUG 15, 2026","Arlington","Permission to Dance","Go Go"],
-
-  ["AUG 11, 2026","Baltimore","Just One Day","Best of Me"],
-  ["AUG 10, 2026","Baltimore","Telepathy","Boy In Luv"],
-
-  ["AUG 06, 2026","Foxborough","Make It Right","N.O"],
-  ["AUG 05, 2026","Foxborough","Paradise","No More Dream"],
-
-  ["AUG 02, 2026","East Rutherford","Autumn Leaves","Go Go"],
-  ["AUG 01, 2026","East Rutherford","Dis-ease","Run"],
-
-  ["JUL 18, 2026","Paris","So What","We Are Bulletproof: The Eternal"],
-  ["JUL 17, 2026","Paris","Boy With Luv","Jump"],
-
-  ["JUL 12, 2026","Munich","Louder Than Bombs","Blood Sweat & Tears"],
-  ["JUL 11, 2026","Munich","Silver Spoon","Pied Piper"],
-
-  ["JUL 07, 2026","London","Save Me","Epilogue: Young Forever"],
-  ["JUL 06, 2026","London","Life Goes On","Dionysus"],
-
-  ["JUL 02, 2026","Brussels","ON","For Youth"],
-  ["JUL 01, 2026","Brussels","Tomorrow","Boy With Luv"],
-
-  ["JUN 27, 2026","Madrid","Mikrokosmos","Best of Me"],
-  ["JUN 26, 2026","Madrid","Airplane Pt.2","Outro: Wings"],
-
-  ["JUN 13, 2026","Busan","Dimple","Ddaeng + Magic Shop (third song included)"],
-  ["JUN 12, 2026","Busan","Paldogangsan","Ma City"],
-
-  ["MAY 28, 2026","Las Vegas","Boyz With Fun","Danger"],
-  ["MAY 27, 2026","Las Vegas","Anpanman","Attack on Bangtan"],
-  ["MAY 24, 2026","Las Vegas","Black Swan","Spine Breaker"],
-  ["MAY 23, 2026","Las Vegas","Permission to Dance","Go Go"],
-
-  ["MAY 19, 2026","Stanford","I Need U","No More Dream"],
-  ["MAY 17, 2026","Stanford","Dope","Blood Sweat & Tears"],
-  ["MAY 16, 2026","Stanford","N.O","Anpanman"],
-
-  ["MAY 10, 2026","Mexico City","Airplane Pt.2","Spring Day"],
-  ["MAY 09, 2026","Mexico City","We Are Bulletproof Pt.2","Just One Day"],
-  ["MAY 07, 2026","Mexico City","Boy In Luv","So What"],
-
-  ["MAY 03, 2026","El Paso","Dionysus","Best of Me"],
-  ["MAY 02, 2026","El Paso","ON","Outro: Wings"],
-
-  ["APR 28, 2026","Tampa","Life Goes On","Silver Spoon"],
-  ["APR 26, 2026","Tampa","Boy With Luv","Pied Piper"],
-  ["APR 25, 2026","Tampa","Permission to Dance","Magic Shop"],
-
-  ["APR 18, 2026","Tokyo","Dope","For You"],
-  ["APR 17, 2026","Tokyo","Save Me","Crystal Snow"],
-
-  ["APR 12, 2026","Goyang","Spring Day","Run"],
-  ["APR 11, 2026","Goyang","Take Two","DNA"],
-  ["APR 09, 2026","Goyang","Mikrokosmos","I Need U"]
-];
-
-
-// ===================================
-// 3. SURPRISE SONGS SEARCH + DISPLAY
-// ===================================
-
-function renderSongs() {
-  const query = document
-    .getElementById("songSearch")
-    .value.trim()
-    .toLowerCase();
-
-  const filteredSongs = songs.filter(song =>
-    song.join(" ").toLowerCase().includes(query)
-  );
-
-  const songList = document.getElementById("songList");
-
-  songList.innerHTML = filteredSongs.length
-    ? filteredSongs.map(song => `
-        <tr>
-          <td>${song[0]}</td>
-          <td>${song[1]}</td>
-          <td class="song-name">${song[2]}</td>
-          <td class="song-name">${song[3]}</td>
-        </tr>
-      `).join("")
-    : `<tr>
-         <td colspan="4" class="empty-state">
-           No surprise-song records found.
-         </td>
-       </tr>`;
-}
-
-document.getElementById("songRecordCount").textContent = songs.length;
-
-document.getElementById("songSearch").addEventListener("input", renderSongs);
-
-renderSongs();
+const songRows = Object.entries(surpriseSongs)
+  .map(([iso, list]) => ({
+    iso,
+    date: formatDate(iso),
+    city: showByDate[iso] ? showByDate[iso].city.split(",")[0] : "UNKNOWN CITY",
+    songs: list
+  }))
+  .sort((a, b) => b.iso.localeCompare(a.iso));
 
 // ===================================
-// 4. WORLD TOUR SCHEDULE DISPLAY
+// 2b. DATA CHECK (makikita sa browser console: F12)
+//     Hinahanap nito ang mga na-overlook: show na walang song record,
+//     o song record na walang katugmang show.
+// ===================================
+
+(function checkData() {
+  const missing = shows.filter(s => s.state === "completed" && !surpriseSongs[s.iso]);
+  const orphan = Object.keys(surpriseSongs).filter(iso => !showByDate[iso]);
+  const future = Object.keys(surpriseSongs).filter(iso => showByDate[iso] && showByDate[iso].state === "upcoming");
+
+  if (missing.length) console.warn("Completed shows WITHOUT surprise-song record:", missing.map(s => `${s.date} ${s.city}`));
+  if (orphan.length) console.warn("Song records with NO matching show date:", orphan);
+  if (future.length) console.warn("Song records for shows that haven't happened yet:", future);
+  if (!missing.length && !orphan.length && !future.length) console.log("Data check OK: every completed show has a song record.");
+})();
+
+// ===================================
+// 3. STATS (auto-computed)
+// ===================================
+
+const completedShows = shows.filter(show => show.state === "completed");
+const upcomingShows = shows.filter(show => show.state === "upcoming");
+
+document.getElementById("completedCount").textContent = completedShows.length;
+document.getElementById("upcomingCount").textContent = upcomingShows.length;
+document.getElementById("totalShowCount").textContent = shows.length;
+document.getElementById("songRecordCount").textContent = songRows.length;
+document.getElementById("songUpdated").textContent = `UPDATED ${SONGS_UPDATED}`;
+
+// ===================================
+// 4. NEXT UP (auto: unang upcoming show)
+// ===================================
+
+(function renderNextShow() {
+  const box = document.getElementById("nextShow");
+
+  if (!upcomingShows.length) {
+    box.innerHTML = `<div><small>TOUR STATUS</small><h2>TOUR COMPLETE</h2><p>Thank you for the memories, ARMY.</p></div>`;
+    return;
+  }
+
+  const next = upcomingShows[0];
+  const sameStop = upcomingShows.filter(s => s.city === next.city && s.venue === next.venue);
+  const dayNums = sameStop.map(s => s.iso.slice(8)).join(", ");
+  const monthLabel = MONTHS[Number(next.iso.slice(5, 7)) - 1];
+  const daysLeft = Math.round((parseISO(next.iso) - TODAY) / 86400000);
+  const countdown = daysLeft === 0 ? "TODAY" : daysLeft === 1 ? "1 DAY TO GO" : `${daysLeft} DAYS TO GO`;
+
+  box.innerHTML = `
+    <div>
+      <small>NEXT TOUR STOP</small>
+      <h2>${escapeHTML(next.city.toUpperCase())}</h2>
+      <p>${escapeHTML(next.venue)}</p>
+      <p class="next-meta">${sameStop.length} show${sameStop.length > 1 ? "s" : ""}: ${monthLabel} ${dayNums}</p>
+    </div>
+    <div class="next-date">
+      ${monthLabel}<br>${next.iso.slice(8)}
+      <small>${countdown}</small>
+    </div>
+  `;
+})();
+
+// ===================================
+// 5. WORLD TOUR SCHEDULE DISPLAY
 // ===================================
 
 let activeScheduleFilter = "all";
@@ -509,20 +559,11 @@ function renderSchedule(filter = activeScheduleFilter) {
   activeScheduleFilter = filter;
 
   const list = document.getElementById("scheduleList");
-  const query = document
-    .getElementById("scheduleSearch")
-    .value.trim()
-    .toLowerCase();
+  const query = document.getElementById("scheduleSearch").value.trim().toLowerCase();
 
   const filteredShows = shows.filter(show => {
-    const matchesStatus =
-      filter === "all" || show.state === filter;
-
-    const matchesSearch =
-      `${show.date} ${show.city} ${show.venue}`
-        .toLowerCase()
-        .includes(query);
-
+    const matchesStatus = filter === "all" || show.state === filter;
+    const matchesSearch = `${show.date} ${show.city} ${show.venue}`.toLowerCase().includes(query);
     return matchesStatus && matchesSearch;
   });
 
@@ -535,8 +576,8 @@ function renderSchedule(filter = activeScheduleFilter) {
           </div>
 
           <div class="place">
-            <h3>${show.city}</h3>
-            <p>${show.venue}</p>
+            <h3>${escapeHTML(show.city)}</h3>
+            <p>${escapeHTML(show.venue)}</p>
           </div>
 
           <span class="status ${show.state === "upcoming" ? "upcoming" : ""}">
@@ -548,108 +589,99 @@ function renderSchedule(filter = activeScheduleFilter) {
 }
 
 function filterSchedule(filter, button) {
-  document.querySelectorAll(".filter-btn").forEach(btn => {
-    btn.classList.remove("active");
-  });
-
+  document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
   button.classList.add("active");
   renderSchedule(filter);
 }
 
-document
-  .getElementById("scheduleSearch")
-  .addEventListener("input", () => renderSchedule());
-
-document.getElementById("completedCount").textContent =
-  shows.filter(show => show.state === "completed").length;
-
-document.getElementById("totalShowCount").textContent =
-  shows.length;
-
+document.getElementById("scheduleSearch").addEventListener("input", () => renderSchedule());
 renderSchedule();
 
+// ===================================
+// 6. SURPRISE SONGS SEARCH + DISPLAY
+// ===================================
+
+function renderSongs() {
+  const query = document.getElementById("songSearch").value.trim().toLowerCase();
+
+  const filteredRows = songRows.filter(row =>
+    `${row.date} ${row.city} ${row.songs.join(" ")}`.toLowerCase().includes(query)
+  );
+
+  document.getElementById("songList").innerHTML = filteredRows.length
+    ? filteredRows.map(row => `
+        <tr>
+          <td class="col-date">${row.date}</td>
+          <td>${escapeHTML(row.city)}</td>
+          <td>
+            <div class="song-chips">
+              ${row.songs.map(song => `<span class="song-chip">${escapeHTML(song)}</span>`).join("")}
+            </div>
+          </td>
+        </tr>
+      `).join("")
+    : `<tr><td colspan="3" class="empty-state">No surprise-song records found.</td></tr>`;
+}
+
+document.getElementById("songSearch").addEventListener("input", renderSongs);
+renderSongs();
 
 // ===================================
-// 5. TOUR REPLAY ARCHIVE DATA
+// 7. TOUR REPLAY ARCHIVE (auto from completed stops)
+//    Lagay lang ang replay link sa object na ito: replayLinks["Kaohsiung"] = "https://..."
 // ===================================
 
-const replayStops = [
-  {city:"Goyang",date:"APR 09-12, 2026",region:"Asia",replayUrl:""},
-  {city:"Tokyo",date:"APR 17-18, 2026",region:"Asia",replayUrl:""},
-  {city:"Tampa",date:"APR 25-28, 2026",region:"North America",replayUrl:""},
-  {city:"El Paso",date:"MAY 02-03, 2026",region:"North America",replayUrl:""},
-  {city:"Mexico City",date:"MAY 07-10, 2026",region:"Latin America",replayUrl:""},
-  {city:"Stanford",date:"MAY 16-19, 2026",region:"North America",replayUrl:""},
-  {city:"Las Vegas",date:"MAY 23-28, 2026",region:"North America",replayUrl:""},
-  {city:"Busan",date:"JUN 12-13, 2026",region:"Asia",replayUrl:""},
-  {city:"Madrid",date:"JUN 26-27, 2026",region:"Europe",replayUrl:""},
-  {city:"Brussels",date:"JUL 01-02, 2026",region:"Europe",replayUrl:""},
-  {city:"London",date:"JUL 06-07, 2026",region:"Europe",replayUrl:""},
-  {city:"Munich",date:"JUL 11-12, 2026",region:"Europe",replayUrl:""},
-  {city:"Paris",date:"JUL 17-18, 2026",region:"Europe",replayUrl:""},
-  {city:"East Rutherford",date:"AUG 01-02, 2026",region:"North America",replayUrl:""},
-  {city:"Foxborough",date:"AUG 05-06, 2026",region:"North America",replayUrl:""},
-  {city:"Baltimore",date:"AUG 10-11, 2026",region:"North America",replayUrl:""},
-  {city:"Arlington",date:"AUG 15-16, 2026",region:"North America",replayUrl:""},
-  {city:"Toronto",date:"AUG 22-23, 2026",region:"North America",replayUrl:""},
-  {city:"Chicago",date:"AUG 27-28, 2026",region:"North America",replayUrl:""},
-  {city:"Los Angeles",date:"SEP 01-06, 2026",region:"North America",replayUrl:""},
-  {city:"Bogotá",date:"OCT 02-03, 2026",region:"Latin America",replayUrl:""},
-  {city:"Lima",date:"OCT 07-10, 2026",region:"Latin America",replayUrl:""},
-  {city:"Santiago",date:"OCT 14-17, 2026",region:"Latin America",replayUrl:""},
-  {city:"Buenos Aires",date:"OCT 21-24, 2026",region:"Latin America",replayUrl:""},
-  {city:"São Paulo",date:"OCT 28-31, 2026",region:"Latin America",replayUrl:""},
-  {city:"Kaohsiung",date:"NOV 19-22, 2026",region:"Asia",replayUrl:""}
-];
+const replayLinks = {
+  // "Goyang": "https://...",
+};
 
+function formatRange(dates) {
+  const first = dates[0], last = dates[dates.length - 1];
+  const [y, m1, d1] = first.split("-");
+  const [, m2, d2] = last.split("-");
+  if (first === last) return `${MONTHS[Number(m1) - 1]} ${d1}, ${y}`;
+  return m1 === m2
+    ? `${MONTHS[Number(m1) - 1]} ${d1}-${d2}, ${y}`
+    : `${MONTHS[Number(m1) - 1]} ${d1} - ${MONTHS[Number(m2) - 1]} ${d2}, ${y}`;
+}
 
-// ===================================
-// 6. REPLAY ARCHIVE DISPLAY + FILTER
-// ===================================
+const replayStops = tour
+  .map(stop => {
+    const played = stop.dates.filter(iso => parseISO(iso) < TODAY);
+    if (!played.length) return null;
+    const cityName = stop.city.split(",")[0];
+    return {
+      city: cityName,
+      date: formatRange(played),
+      region: stop.region,
+      replayUrl: replayLinks[cityName] || ""
+    };
+  })
+  .filter(Boolean);
 
 function renderReplays() {
-  const search = document
-    .getElementById("replaySearch")
-    .value.trim()
-    .toLowerCase();
-
+  const search = document.getElementById("replaySearch").value.trim().toLowerCase();
   const region = document.getElementById("replayFilter").value;
 
   const filteredStops = replayStops.filter(stop => {
-    const matchesSearch =
-      `${stop.city} ${stop.date} ${stop.region}`
-        .toLowerCase()
-        .includes(search);
-
-    const matchesRegion =
-      region === "all" || stop.region === region;
-
+    const matchesSearch = `${stop.city} ${stop.date} ${stop.region}`.toLowerCase().includes(search);
+    const matchesRegion = region === "all" || stop.region === region;
     return matchesSearch && matchesRegion;
   });
 
-  const replayGrid = document.getElementById("replayGrid");
-
-  replayGrid.innerHTML = filteredStops.length
+  document.getElementById("replayGrid").innerHTML = filteredStops.length
     ? filteredStops.map(stop => `
         <article class="replay-card">
-
           <div class="replay-thumb">
-            <span class="replay-wordmark">
-              ARIRANG<span>.</span>
-            </span>
-
-            ${
-              stop.replayUrl
-                ? '<span class="play-icon">▶</span>'
-                : '<span class="replay-pending">ARCHIVE ENTRY</span>'
-            }
+            <span class="replay-wordmark">ARIRANG<span>.</span></span>
+            ${stop.replayUrl
+              ? '<span class="play-icon">▶</span>'
+              : '<span class="replay-pending">ARCHIVE ENTRY</span>'}
           </div>
 
           <div class="replay-info">
-            <small>${stop.region.toUpperCase()} / ARIRANG TOUR</small>
-
-            <h3>${stop.city}</h3>
-
+            <small>${escapeHTML(stop.region.toUpperCase())} / ARIRANG TOUR</small>
+            <h3>${escapeHTML(stop.city)}</h3>
             <p>${stop.date}</p>
 
             <a
@@ -663,26 +695,14 @@ function renderReplays() {
               ${stop.replayUrl ? 'WATCH REPLAY ↗' : 'REPLAY LINK PENDING'}
             </a>
           </div>
-
         </article>
       `).join("")
     : `<p class="empty-state">No concert stops found.</p>`;
 }
 
-document
-  .getElementById("replaySearch")
-  .addEventListener("input", renderReplays);
-
-document
-  .getElementById("replayFilter")
-  .addEventListener("change", renderReplays);
-
+document.getElementById("replaySearch").addEventListener("input", renderReplays);
+document.getElementById("replayFilter").addEventListener("change", renderReplays);
 renderReplays();
-
-
-// ===================================
-// 7. END OF JAVASCRIPT
-// ===================================
 
 </script>
 
