@@ -103,7 +103,7 @@ section.content { padding: 65px 0; }
 .song-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 11px; vertical-align: top; }
 .song-table tr:hover td { background: #fafafa; }
 .song-table .col-date { white-space: nowrap; }
-.song-name { font-weight: 800; }
+.song-name { font-weight: 400; }
 .song-extra { display: block; font-size: 9px; font-weight: 700; color: var(--red); margin-top: 4px; letter-spacing: .5px; }
 .song-note { font-size: 10px; color: var(--muted); margin-top: 15px; }
 
@@ -621,11 +621,18 @@ renderSongs();
 // ===================================
 // 7. TOUR REPLAY ARCHIVE (auto from completed stops)
 //    Lagay lang ang replay link sa object na ito: replayLinks["Kaohsiung"] = "https://..."
+//    Pwede ring pangalan ng sariling page (halimbawa "goyang-replay.html").
 // ===================================
 
 const replayLinks = {
-  // "Goyang": "https://...",
+  "Goyang": "goyang-replay.html",
+  "Tokyo": "tokyo-replay.html"
 };
+
+// Kapag http/https ang link, bubukas sa bagong tab. Kapag page mo mismo, same tab.
+function isExternalLink(url) {
+  return /^https?:\/\//i.test(url);
+}
 
 function formatRange(dates) {
   const first = dates[0], last = dates[dates.length - 1];
@@ -680,7 +687,7 @@ function renderReplays() {
               class="watch-btn"
               href="${stop.replayUrl || '#'}"
               ${stop.replayUrl
-                ? 'target="_blank" rel="noopener"'
+                ? (isExternalLink(stop.replayUrl) ? 'target="_blank" rel="noopener"' : '')
                 : 'onclick="return false" title="Replay link not added yet"'}
               style="${stop.replayUrl ? '' : 'opacity:.55;cursor:not-allowed'}"
             >
