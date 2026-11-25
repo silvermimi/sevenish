@@ -1,0 +1,791 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEVENISH. | A BTS Fan Space</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --red: #e52336;
+  --black: #111111;
+  --white: #ffffff;
+  --gray: #f1f1f1;
+  --muted: #777777;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* HEADER */
+
+header {
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7%;
+  background: white;
+  border-bottom: 1px solid #eeeeee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 35px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.logo span {
+  color: var(--red);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+nav a {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: .2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--red);
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+/* GENERAL */
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 30px;
+}
+
+.section {
+  padding: 75px 0;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.section-heading h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 38px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.view-all {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--red);
+  letter-spacing: 1px;
+}
+
+.tag {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  padding: 7px 12px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* HERO */
+
+.hero {
+  background: var(--black);
+  color: white;
+  padding: 75px 7%;
+}
+
+.hero-content {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 55px;
+}
+
+.hero-label {
+  color: #ff5260;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(55px, 7vw, 90px);
+  font-weight: 900;
+  line-height: .88;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+}
+
+.hero h1 span {
+  color: var(--red);
+}
+
+.hero p {
+  color: #cccccc;
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 440px;
+  margin-bottom: 28px;
+}
+
+.primary-btn {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  padding: 15px 24px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  transition: .2s;
+}
+
+.primary-btn:hover {
+  background: white;
+  color: var(--black);
+}
+
+.hero-image {
+  height: 390px;
+  background: #292929;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-image img {
+  height: 100%;
+  filter: grayscale(100%);
+}
+
+.hero-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 10px solid var(--red);
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* LATEST UPDATES */
+
+.updates {
+  background: var(--gray);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.card {
+  background: white;
+  overflow: hidden;
+  transition: transform .25s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  height: 230px;
+  overflow: hidden;
+  background: #dddddd;
+}
+
+.card-image img {
+  height: 100%;
+  transition: transform .4s;
+}
+
+.card:hover img {
+  transform: scale(1.04);
+}
+
+.card-info {
+  padding: 22px;
+}
+
+.category {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.card h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 9px 0;
+}
+
+.card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ARCHIVE */
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.archive-card {
+  position: relative;
+  height: 270px;
+  overflow: hidden;
+  background: #222;
+}
+
+.archive-card img {
+  height: 100%;
+  opacity: .75;
+  transition: .3s;
+}
+
+.archive-card:hover img {
+  transform: scale(1.08);
+  opacity: .5;
+}
+
+.archive-card h3 {
+  position: absolute;
+  bottom: 20px;
+  left: 18px;
+  right: 12px;
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* ARMY CORNER */
+
+.army {
+  background: var(--red);
+  color: white;
+  padding: 65px 30px;
+  text-align: center;
+}
+
+.army h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 55px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.army p {
+  font-size: 13px;
+  max-width: 550px;
+  line-height: 1.8;
+  margin: 0 auto 25px;
+}
+
+.army .primary-btn {
+  background: white;
+  color: var(--black);
+}
+
+/* FOOTER */
+
+footer {
+  background: var(--black);
+  color: white;
+  padding: 45px 7%;
+  text-align: center;
+}
+
+footer .logo {
+  font-size: 38px;
+  margin-bottom: 8px;
+}
+
+footer .tagline {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 22px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-bottom: 25px;
+}
+
+.footer-links a {
+  font-size: 10px;
+  color: #cccccc;
+  font-weight: 700;
+}
+
+.copyright {
+  font-size: 10px;
+  color: #888888;
+}
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+  header {
+    padding: 0 5%;
+  }
+
+  nav {
+    gap: 15px;
+  }
+
+  nav a {
+    font-size: 9px;
+  }
+
+  .hero-content {
+    gap: 25px;
+  }
+
+  .archive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  header {
+    height: 68px;
+  }
+
+  .logo {
+    font-size: 30px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    width: 100%;
+    padding: 25px;
+    background: white;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    border-bottom: 2px solid var(--red);
+  }
+
+  nav.show {
+    display: flex;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  .hero {
+    padding: 55px 5%;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 65px;
+  }
+
+  .hero-image {
+    height: 270px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .section {
+    padding: 55px 0;
+  }
+
+  .section-heading h2 {
+    font-size: 30px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-image {
+    height: 210px;
+  }
+
+  .archive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .archive-card {
+    height: 200px;
+  }
+
+  .archive-card h3 {
+    font-size: 21px;
+  }
+
+  .army h2 {
+    font-size: 43px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+  <a href="#home" class="logo">SEVENISH<span>.</span></a>
+
+  <button class="menu-toggle" onclick="toggleMenu()"
+    aria-label="Toggle navigation">☰</button>
+
+  <nav id="navigation">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#updates">Updates</a>
+    <a href="#aus">AUs</a>
+    <a href="#archive">Archive</a>
+    <a href="#army">ARMY Corner</a>
+  </nav>
+</header>
+
+
+<!-- HERO SECTION -->
+
+<section class="hero" id="home">
+  <div class="hero-content">
+
+    <div>
+      <div class="hero-label">WELCOME TO SEVENISH</div>
+
+      <h1>
+        ALL THINGS<br>
+        BTS<span>.</span><br>
+        ALL IN ONE<br>
+        PLACE<span>.</span>
+      </h1>
+
+      <p>
+        Your little corner for Bangtan news, stories,
+        music and memories. Everything ARMY loves,
+        all in one place.
+      </p>
+
+      <a href="#updates" class="primary-btn">
+        EXPLORE SEVENISH ↗
+      </a>
+    </div>
+
+    <div class="hero-image">
+      <!-- Replace with your BTS image -->
+      <img src="images/bts-hero.jpg"
+        alt="BTS group photo"
+        onerror="this.style.display='none'">
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="section" id="about">
+  <div class="container">
+
+    <div class="section-heading">
+      <h2>WHAT IS SEVENISH?</h2>
+    </div>
+
+    <p style="max-width:700px; color:#666; font-size:14px; line-height:2;">
+      SEVENISH is a fan-made space dedicated to BTS and ARMY.
+      Discover the latest updates, explore fanfiction,
+      revisit unforgettable performances and find
+      everything Bangtan in one place.
+    </p>
+
+  </div>
+</section>
+
+
+<!-- UPDATES -->
+
+<section class="section updates" id="updates">
+  <div class="container">
+
+    <div class="section-heading">
+      <h2>LATEST UPDATES</h2>
+      <a href="#" class="view-all">VIEW ALL ↗</a>
+    </div>
+
+    <div class="card-grid">
+
+      <a href="#" class="card">
+        <div class="card-image">
+          <img src="images/bts-news.jpg"
+            alt="BTS news"
+            onerror="this.style.display='none'">
+        </div>
+        <div class="card-info">
+          <span class="category">LATEST NEWS</span>
+          <h3>BTS News & Updates</h3>
+          <p>What's happening in Bangtan? Catch up on news,
+          announcements and member activities.</p>
+        </div>
+      </a>
+
+      <a href="#" class="card">
+        <div class="card-image">
+          <img src="images/bts-au.jpg"
+            alt="BTS stories"
+            onerror="this.style.display='none'">
+        </div>
+        <div class="card-info">
+          <span class="category">FANFICTION</span>
+          <h3>AUs & Stories</h3>
+          <p>Your next reading obsession starts here.
+          Discover completed and ongoing AUs.</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- AUS -->
+
+<section class="section" id="aus">
+  <div class="container">
+
+    <div class="section-heading">
+      <h2>AUs & STORIES</h2>
+      <a href="#" class="view-all">READ MORE ↗</a>
+    </div>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-info">
+          <span class="category">COMPLETED STORIES</span>
+          <h3>Find Your Next Favorite AU</h3>
+          <p>Explore fanfiction from different writers and
+          discover stories worth reading.</p>
+          <br>
+          <a href="#" class="view-all">BROWSE STORIES ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-info">
+          <span class="category">ONGOING STORIES</span>
+          <h3>What's New in the AU World?</h3>
+          <p>Keep up with new chapters, recently published
+          stories and recommendations.</p>
+          <br>
+          <a href="#" class="view-all">EXPLORE AUs ↗</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ARCHIVE -->
+
+<section class="section updates" id="archive">
+  <div class="container">
+
+    <div class="section-heading">
+      <h2>THE ARCHIVE</h2>
+      <a href="#" class="view-all">EXPLORE ALL ↗</a>
+    </div>
+
+    <div class="archive-grid">
+
+      <a href="#" class="archive-card">
+        <img src="images/concerts.jpg"
+          alt="Concerts"
+          onerror="this.style.display='none'">
+        <h3>Concerts & Tours</h3>
+      </a>
+
+      <a href="#" class="archive-card">
+        <img src="images/music.jpg"
+          alt="Music and albums"
+          onerror="this.style.display='none'">
+        <h3>Music & Albums</h3>
+      </a>
+
+      <a href="#" class="archive-card">
+        <img src="images/photos.jpg"
+          alt="BTS photos"
+          onerror="this.style.display='none'">
+        <h3>Photos & Videos</h3>
+      </a>
+
+      <a href="#" class="archive-card">
+        <img src="images/memories.jpg"
+          alt="BTS memories"
+          onerror="this.style.display='none'">
+        <h3>Bangtan Memories</h3>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ARMY CORNER -->
+
+<section class="army" id="army">
+  <h2>HEY, ARMY!</h2>
+
+  <p>
+    This space is yours. Discover fan projects,
+    playlists, quizzes, recommendations and
+    everything that makes being an ARMY special.
+  </p>
+
+  <a href="#" class="primary-btn">VISIT ARMY CORNER ↗</a>
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="logo">SEVENISH<span style="color:#e52336;">.</span></div>
+
+  <div class="tagline">
+    SEVEN MEMBERS. ONE UNIVERSE.
+  </div>
+
+  <div class="footer-links">
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#updates">UPDATES</a>
+    <a href="#aus">AUs</a>
+    <a href="#archive">ARCHIVE</a>
+    <a href="#army">ARMY CORNER</a>
+  </div>
+
+  <div class="copyright">
+    A fan-made website for ARMY. Not affiliated with BTS or BIGHIT MUSIC.
+    <br><br>
+    © 2026 SEVENISH. All rights reserved.
+  </div>
+
+</footer>
+
+
+<script>
+function toggleMenu() {
+  document.getElementById('navigation').classList.toggle('show');
+}
+
+// Close mobile menu after clicking a link
+document.querySelectorAll('#navigation a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navigation').classList.remove('show');
+  });
+});
+
+// Highlight active navigation link
+document.querySelectorAll('#navigation a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('#navigation a').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    link.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
