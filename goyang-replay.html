@@ -84,19 +84,19 @@
       max-width: 1800px;
       aspect-ratio: 1800 / 710;
       margin: 0 auto 34px;
-      background: #ededed;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       overflow: hidden;
+      position: relative;
+      background: #ededed;
     }
 
     .hero img {
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      object-position: center;
+      object-fit: cover;
+
+      /* LOWER IMAGE BY 5% TO SHOW THEIR FACES */
+      object-position: center 45%;
     }
 
     /* CONTENT */
@@ -211,7 +211,7 @@
       text-transform: uppercase;
     }
 
-    /* MOBILE */
+    /* TABLET */
 
     @media(max-width:760px) {
       .page {
@@ -229,7 +229,13 @@
       .hero {
         margin-bottom: 27px;
       }
+
+      .hero img {
+        object-position: center 45%;
+      }
     }
+
+    /* MOBILE */
 
     @media(max-width:420px) {
       .topline {
@@ -256,7 +262,6 @@
 
     <!-- NAVIGATION -->
     <nav class="topline">
-
       <a class="brand" href="index.html">
         SEVENISH<span>.</span>
       </a>
@@ -265,20 +270,18 @@
         <a class="back" href="index.html">← Back Home</a>
         <a class="back" href="concerts.html">Tour Archive</a>
       </div>
-
     </nav>
 
-    <!-- GOYANG IMAGE -->
+    <!-- GOYANG BANNER -->
     <header class="hero">
       <img
         src="goyang.jpg"
-        alt="Goyang concert banner"
+        alt="BTS Goyang concert banner"
       >
     </header>
 
     <!-- REPLAY SECTION -->
     <section>
-
       <p class="eyebrow" id="region">
         ASIA / ARIRANG TOUR
       </p>
@@ -292,7 +295,6 @@
       </p>
 
       <div class="days" id="days"></div>
-
     </section>
 
     <!-- FOOTER -->
@@ -318,10 +320,7 @@
     };
 
     const params = new URLSearchParams(window.location.search);
-
-    const requestedCity =
-      (params.get('city') || 'goyang').toLowerCase();
-
+    const requestedCity = (params.get('city') || 'goyang').toLowerCase();
     const data = replays[requestedCity] || replays.goyang;
 
     document.title = `${data.name} Replay | SEVENISH.`;
