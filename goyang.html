@@ -1,390 +1,73 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090909">
-  <title>Tour Replay Archive | SEVENISH.</title>
+const replayLinks = {
+  "Goyang": "goyang-replay.html",
+  "Tokyo": "tokyo-replay.html"
+};
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+function isExternalLink(url) {
+  return /^https?:\/\//i.test(url);
+}
 
-  <style>
-    :root {
-      --red: #f12d40;
-      --ink: #101010;
-      --muted: #858585;
-      --paper: #f1f1f1;
-    }
+function formatRange(dates) {
+  const first = dates[0], last = dates[dates.length - 1];
+  const [y, m1, d1] = first.split("-");
+  const [, m2, d2] = last.split("-");
 
-    * {
-      box-sizing: border-box;
-    }
+  if (first === last) return `${MONTHS[Number(m1) - 1]} ${d1}, ${y}`;
 
-    body {
-      margin: 0;
-      background: #fff;
-      color: var(--ink);
-      font-family: Inter, Arial, sans-serif;
-    }
+  return m1 === m2
+    ? `${MONTHS[Number(m1) - 1]} ${d1}-${d2}, ${y}`
+    : `${MONTHS[Number(m1) - 1]} ${d1} - ${MONTHS[Number(m2) - 1]} ${d2}, ${y}`;
+}
 
-    .page {
-      width: min(1180px, calc(100% - 44px));
-      margin: 0 auto;
-      padding: 28px 0 54px;
-    }
+const replayStops = tour
+  .map(stop => {
+    const cityName = stop.city.split(",")[0];
+    const replayUrl = replayLinks[cityName];
 
-    .topline {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #e5e5e5;
-      padding-bottom: 17px;
-      margin-bottom: 28px;
-    }
+    if (!replayUrl) return null;
 
-    .brand {
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: 28px;
-      letter-spacing: 1.2px;
-      text-decoration: none;
-      color: var(--ink);
-    }
-
-    .brand span {
-      color: var(--red);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-
-    .back {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.3px;
-      color: #555;
-      text-decoration: none;
-      text-transform: uppercase;
-    }
-
-    .back:hover {
-      color: var(--red);
-    }
-
-    .hero {
-      background: #ededed;
-      height: 245px;
-      overflow: hidden;
-      margin-bottom: 34px;
-    }
-
-    .hero img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .eyebrow {
-      color: var(--red);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin: 0 0 10px;
-    }
-
-    .heading {
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: 42px;
-      line-height: 1;
-      margin: 0 0 9px;
-    }
-
-    .sub {
-      font-size: 13px;
-      line-height: 1.7;
-      color: #777;
-      margin: 0 0 25px;
-    }
-
-    .days {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .day {
-      background: var(--paper);
-      padding: 24px 22px 22px;
-      min-height: 190px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .day-no {
-      font-size: 11px;
-      color: var(--red);
-      font-weight: 900;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-    }
-
-    .day h2 {
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: 32px;
-      margin: 8px 0 6px;
-      line-height: 1;
-    }
-
-    /* CITY + DATE */
-    .day .replay-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 0 0 20px;
-      font-family: Inter, Arial, sans-serif;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: normal;
-      color: #777;
-    }
-
-    .day .replay-city,
-    .day .replay-date {
-      color: #777;
-      font: inherit;
-    }
-
-    /* SMALL DOT */
-    .day .meta-dot {
-      width: 2px;
-      height: 2px;
-      min-width: 2px;
-      min-height: 2px;
-      border-radius: 50%;
-      background: #777;
-      flex: 0 0 2px;
-    }
-
-    .watch {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 54px;
-      background: var(--red);
-      color: #fff;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .7px;
-      text-transform: uppercase;
-      transition: background .18s, transform .18s;
-    }
-
-    .watch:hover {
-      background: #c91e30;
-      transform: translateY(-2px);
-    }
-
-    .footer {
-      margin-top: 40px;
-      padding-top: 18px;
-      border-top: 1px solid #e5e5e5;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      color: #888;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    @media(max-width:760px) {
-      .days {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        height: 210px;
-      }
-
-      .page {
-        width: min(100% - 28px, 560px);
-      }
-
-      .day {
-        min-height: 170px;
-      }
-    }
-
-    @media(max-width:420px) {
-      .topline {
-        align-items: flex-start;
-        gap: 14px;
-      }
-
-      .nav-links {
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 9px;
-      }
-
-      .back {
-        font-size: 10px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <main class="page">
-
-    <!-- NAVIGATION -->
-    <nav class="topline">
-      <a class="brand" href="index.html">
-        SEVENISH<span>.</span>
-      </a>
-
-      <div class="nav-links">
-        <a class="back" href="index.html">← Back Home</a>
-        <a class="back" href="concerts.html">Tour Archive</a>
-      </div>
-    </nav>
-
-    <!-- BANNER -->
-    <header class="hero">
-      <img src="goyang.jpg" alt="Goyang concert banner">
-    </header>
-
-    <!-- REPLAY CONTENT -->
-    <section>
-
-      <p class="eyebrow" id="region">
-        ASIA / ARIRANG TOUR
-      </p>
-
-      <h2 class="heading" id="city">
-        GOYANG
-      </h2>
-
-      <p class="sub">
-        Choose a concert day below to watch the replay.
-      </p>
-
-      <div class="days" id="days"></div>
-
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <span>SEVENISH. · SEVEN MEMBERS. ONE UNIVERSE.</span>
-      <span>Made with love for ARMY</span>
-    </footer>
-
-  </main>
-
-  <script>
-
-    // REPLAY LINKS AND DATES
-
-    const replays = {
-
-      goyang: {
-        name: 'GOYANG',
-        region: 'ASIA / ARIRANG TOUR',
-
-        days: [
-          ['Day 1', 'APRIL 09', 'https://t.me/bangtandept/9'],
-          ['Day 2', 'APRIL 11', 'https://t.me/bangtandept/16'],
-          ['Day 3', 'APRIL 12', 'https://t.me/bangtandept/17']
-        ]
-      },
-
-      tokyo: {
-        name: 'TOKYO',
-        region: 'ASIA / ARIRANG TOUR',
-
-        days: [
-          ['Day 1', '', 'https://t.me/c/4325285226/15'],
-          ['Day 2', '', 'https://t.me/c/4325285226/8']
-        ]
-      },
-
-      tampa: {
-        name: 'TAMPA',
-        region: 'NORTH AMERICA / ARIRANG TOUR',
-
-        days: [
-          ['Day 1', '', 'https://t.me/c/4325285226/12'],
-          ['Day 2', '', 'https://t.me/c/4325285226/11'],
-          ['Day 3', '', 'https://t.me/c/4325285226/10']
-        ]
-      }
-
+    return {
+      city: cityName,
+      date: formatRange(stop.dates),
+      region: stop.region,
+      replayUrl
     };
+  })
+  .filter(Boolean);
 
-    // GET SELECTED CITY
+function renderReplays() {
+  const search = document.getElementById("replaySearch").value.trim().toLowerCase();
+  const region = document.getElementById("replayFilter").value;
 
-    const params = new URLSearchParams(window.location.search);
+  const filteredStops = replayStops.filter(stop => {
+    const matchesSearch = `${stop.city} ${stop.date} ${stop.region}`.toLowerCase().includes(search);
+    const matchesRegion = region === "all" || stop.region === region;
+    return matchesSearch && matchesRegion;
+  });
 
-    const requestedCity =
-      (params.get('city') || 'goyang').toLowerCase();
+  document.getElementById("replayGrid").innerHTML = filteredStops.length
+    ? filteredStops.map(stop => `
+        <article class="replay-card">
+          <div class="replay-thumb">
+            <span class="replay-wordmark">ARIRANG<span>.</span></span>
+            <span class="play-icon">▶</span>
+          </div>
 
-    const data = replays[requestedCity] || replays.goyang;
+          <div class="replay-info">
+            <small>${escapeHTML(stop.region.toUpperCase())} / ARIRANG TOUR</small>
+            <h3>${escapeHTML(stop.city)}</h3>
+            <p>${stop.date}</p>
 
-    // UPDATE PAGE
-
-    document.title = `${data.name} Replay | SEVENISH.`;
-
-    document.getElementById('region').textContent = data.region;
-
-    document.getElementById('city').textContent = data.name;
-
-    // GENERATE REPLAY CARDS
-
-    document.getElementById('days').innerHTML =
-      data.days.map(([label, date, url], index) => `
-
-        <article class="day">
-
-          <span class="day-no">
-            ${String(index + 1).padStart(2, '0')} / CONCERT REPLAY
-          </span>
-
-          <h2>${label.toUpperCase()}</h2>
-
-          ${date ? `
-            <p class="replay-meta">
-              <span class="replay-city">${data.name}</span>
-              <span class="meta-dot" aria-hidden="true"></span>
-              <span class="replay-date">${date}</span>
-            </p>
-          ` : ''}
-
-          <a
-            class="watch"
-            href="${url}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Watch replay ↗
-          </a>
-
+            <a class="watch-btn" href="${stop.replayUrl}">
+              WATCH REPLAY ↗
+            </a>
+          </div>
         </article>
+      `).join("")
+    : `<p class="empty-state">No concert stops found.</p>`;
+}
 
-      `).join('');
-
-  </script>
-
-</body>
-</html>
+document.getElementById("replaySearch").addEventListener("input", renderReplays);
+document.getElementById("replayFilter").addEventListener("change", renderReplays);
+renderReplays();
